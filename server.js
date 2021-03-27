@@ -9,7 +9,7 @@ const mysql = require('mysql');
 const server = express();
 server.set('view engine','ejs');
 server.use(express.urlencoded({extended:false}));
-server.use(session({secret: 'lalalala', saveUninitialized: false, resave: false}));
+server.use(session({secret: 'lalalala', saveUninitialized: true, resave: true}));
 server.use("/", express.static(__dirname + '/views/'));
 server.use("/", express.static(__dirname + '/public/'));
 
@@ -29,9 +29,12 @@ server.post("/login", function(req,res)
         if (err) throw err;
         if(rows.length > 0)
         {
-            req.session.loggedIn = true;
+            req.session.initialized = true;
             req.session.username = login;
-            //req.session.mode
+            db.query('SELECT code FROM utilisateur WHERE username = ?', [login], function(err, rows, fields) 
+            {
+                req.session.mode = parseInt(rows[0].code, 10);
+            });
             res.redirect("/home/");
         } else 
         {
@@ -42,9 +45,9 @@ server.post("/login", function(req,res)
 
 server.get("/login", function(req,res)
 {
-    if(req.session.loggedIn)
+    if(req.session.initialized)
     {
-        res.render("//home/");
+        res.redirect("/home/");
     } else {
         res.render('login.ejs');
     }
@@ -52,19 +55,26 @@ server.get("/login", function(req,res)
 
 server.get("/home", function(req,res)
 {
-    if(req.session.loggedIn)
+    if(req.session.initialized)
     {
-        res.render("home.ejs");
+        if(req.session.code == 0) //client
+        {
+            res.render("client.ejs");
+        } else //vendeur
+        {
+            res.render("seller.ejs");
+        }
+        
     } else {
-        res.redirect('login/');
+        res.redirect('/login/');
     }
 });
 
 server.get("/", function(req, res)
 {
-    if(req.session.loggedIn)
+    if(req.session.initialized)
     {
-        res.render('home/');
+        res.redirect('home/');
     } else {
         res.redirect('login/');
     }
