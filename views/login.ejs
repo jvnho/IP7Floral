@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="../jquery/jquery.js"></script>
+    <meta charset="utf-8">
+    <title>Se connecter à IP7Floral</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <script> 
+        var errorMessage = "";
+        <% if (typeof message !== 'undefined') { %>
+            errorMessage = <%-  JSON.stringify(message) %>;
+        <% } else { %>
+            errorMessage = "";
+        <% } %>
+    </script>
+    <script src="../script/authentification.js"></script>
+</head>
+
+<body>
+    <h1>Bienvenue sur IP7Floral</h1>
+    <p id="errorMessage"></p>
+    <form action="" method="post" id="logForm">
+        <div class="loginContainer">
+            <label>Identifiant</label>
+            <input type="text" name="login" id="login" >
+        </div>
+        <div class="passContainer">
+            <label>Mot de passe</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <input type="submit" value="Se connecter" id="subForm">
+    </form>
+</body>
