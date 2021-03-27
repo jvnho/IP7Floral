@@ -7,9 +7,12 @@ const path = require("path");
 const mysql = require('mysql');
 
 const server = express();
+
 server.set('view engine','ejs');
+
 server.use(express.urlencoded({extended:false}));
 server.use(session({secret: 'lalalala', saveUninitialized: true, resave: true}));
+
 server.use("/", express.static(__dirname + '/views/'));
 server.use("/", express.static(__dirname + '/public/'));
 
@@ -33,9 +36,9 @@ server.post("/login", function(req,res)
             req.session.username = login;
             db.query('SELECT code FROM utilisateur WHERE username = ?', [login], function(err, rows, fields) 
             {
-                req.session.mode = parseInt(rows[0].code, 10);
+                req.session.code = parseInt(rows[0].code, 10);
+                res.redirect("/home/");
             });
-            res.redirect("/home/");
         } else 
         {
             res.render('login.ejs', {message : "Mot de passe ou utilisateur inexistant"});
@@ -57,6 +60,8 @@ server.get("/home", function(req,res)
 {
     if(req.session.initialized)
     {
+        console.log(req.session.code);
+        console.log(typeof req.session.code);
         if(req.session.code == 0) //client
         {
             res.render("client.ejs");
