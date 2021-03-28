@@ -60,8 +60,6 @@ server.get("/home", function(req,res)
 {
     if(req.session.initialized)
     {
-        console.log(req.session.code);
-        console.log(typeof req.session.code);
         if(req.session.code == 0) //client
         {
             res.render("client.ejs");
@@ -75,7 +73,7 @@ server.get("/home", function(req,res)
     }
 });
 
-server.get("/", function(req, res)
+server.get("*", function(req, res)
 {
     if(req.session.initialized)
     {
