@@ -1,0 +1,28 @@
+.gallery{
+    display: inline-grid;
+}
+
+.gallery .article {
+    position: relative;
+}
+
+.gallery .article img{
+    width: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px; 
+    padding: 5px;
+    transition: transform .5s;
+}
+
+  
+.gallery .article img:hover {
+    transform: scale(1.5);
+}
+
+.gallery .article .buyBtn {
+    position: absolute;
+    top: 95%;
+    left: 80%;
+    cursor: pointer;
+}

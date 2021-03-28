@@ -3,30 +3,40 @@
 <head>
     <script src="../jquery/jquery.js"></script>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/gallery.css">
     <title>Accueil IP7Floral</title>
-    <script> var articles, username = "";
-    <% if(typeof articles !== 'undefined') {%> 
-        articles = <%- JSON.stringify(articles) %>;
-    <% } else { %>
-        articles = [];
-    <% } %>
+    <script> 
+        var articles, username = "";
+        <% if(typeof articles !== 'undefined') {%> 
+            articles = <%- JSON.stringify(articles) %>;
+        <% } else { %>
+            articles = [];
+        <% } %>
     </script>
+    <script src="../script/home.js"></script>
 </head>
 
 <body>
     <header>
         <% if(typeof username !== 'undefined') {%> 
-            <button onclick="location.href='/logout'" type="button">Se déconnecter</button>
+            <button onclick="location.href='/logout'" class="button" type="button" id="headerBtn">Se déconnecter</button>
         <% } else { %> 
-            <button onclick="location.href='/login'" type="button">Se connecter</button>
+            <button onclick="location.href='/login'" class="button" type="button" id="headerBtn">Se connecter</button>
         <% } %>
     </header>
-    <script>
+
+    <div class="gallery">
+        <%
         var i;
-        for(i = 0; i < articles.length; i++){
-            console.log(articles[i].location);
-            console.log(articles[i].type);
-            console.log(articles[i].prix);
-        }
-    </script>
+        for(i = 0; i < articles.length; i++){ %>
+            <div class="article">
+                <img id="bouquet<%=i%>"src="../<%= articles[i].location%>" alt="bouquet<%=i%>">
+                <button id="buyBtn<%=i%>" class="buyBtn" id >Acheter</button>
+            </div>
+        <% } %>
+    </div>
+    
+    <footer>
+
+    </footer>
 </body>
