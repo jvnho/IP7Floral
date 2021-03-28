@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 
 <head>
+    <script src="../jquery/jquery.js"></script>
     <meta charset="utf-8">
     <title>Accueil IP7Floral</title>
-    <script> var article = <%= articles %> </script>
+    <script> var articles, username = "";
+    <% if(typeof articles !== 'undefined') {%> 
+        articles = <%- JSON.stringify(articles) %>;
+    <% } else { %>
+        articles = [];
+    <% } %>
+    </script>
 </head>
 
 <body>
-    <p>Client</p>
     <header>
-        <button onclick="location.href='login'" type="button">Se connecter</button>
+        <% if(typeof username !== 'undefined') {%> 
+            <button onclick="location.href='/logout'" type="button">Se déconnecter</button>
+        <% } else { %> 
+            <button onclick="location.href='/login'" type="button">Se connecter</button>
+        <% } %>
     </header>
+    <script>
+        var i;
+        for(i = 0; i < articles.length; i++){
+            console.log(articles[i].location);
+            console.log(articles[i].type);
+            console.log(articles[i].prix);
+        }
+    </script>
 </body>

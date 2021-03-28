@@ -3,6 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const ejs = require("ejs");
 const path = require("path");
+const mysql = require('mysql');
+
 //const bodyParser = require('body-parser')
 
 const server = express();
@@ -15,28 +17,29 @@ server.use(session({secret: 'lalalala', saveUninitialized: true, resave: true}))
 server.use("/", express.static(__dirname + '/views/'));
 server.use("/", express.static(__dirname + '/public/'));
 
-const database = require('./database');
-
+var pool = mysql.createPool(
+{
+    host: 'localhost',
+    user: 'root',
+    password: 'Nicola$32',
+    database: 'ip7floral',
+    connectionLimit : 10
+});
+    
 server.post("/login", function(req,res)
 {
-    var login = (req.body.login).trim(), password = req.body.password;
-    database.query('SELECT * FROM utilisateur WHERE username = ? AND password = ?', [login, password], function(err, rows, fields) 
+    var login = (req.body.login).trim(), password = req.body.password;        
+    pool.query('SELECT * FROM utilisateur WHERE username = ? AND password = ?', [login, password], function(err, rows, fields) 
     {
         if (err) throw err;
         if(rows.length > 0)
         {
             req.session.initialized = true;
             req.session.username = login;
-            database.query('SELECT code FROM utilisateur WHERE username = ?', [login], function(err, rows, fields) 
-            {
-                req.session.code = parseInt(rows[0].code, 10);
-                res.redirect("/home/");
-            });
-            database.end();
-            if (err) throw err;
+            req.session.code = parseInt(rows[0].code, 10);
+            res.redirect("/home/");
         } else 
         {
-            database.end();
             res.render('login.ejs', {message : "Mot de passe ou utilisateur inexistant"});
         }
     });
@@ -57,8 +60,12 @@ server.get("/home", function(req,res)
     if(req.session.initialized)
     {
         if(req.session.code == 0) //client
-        {
-            res.render("client.ejs");
+        { 
+            pool.query('SELECT * FROM article', function(err, rows, fields) 
+            {
+                if (err) throw err;
+                res.render("client.ejs", {articles: rows, username: req.session.username});
+            });
         } else //vendeur
         {
             res.render("seller.ejs");
@@ -69,7 +76,13 @@ server.get("/home", function(req,res)
     }
 });
 
-server.get("*", function(req, res)
+server.get("/logout", function(req, res)
+{
+    req.session.destroy();
+    res.redirect("/home");
+});
+
+server.get("/", function(req, res)
 {
     if(req.session.initialized)
     {
@@ -78,5 +91,17 @@ server.get("*", function(req, res)
         res.redirect('login/');
     }
 });
+
+/*
+server.get("*", function(req, res)
+{
+    if(req.session.initialized)
+    {
+        res.redirect('home/');
+    } else {
+        res.redirect('login/');
+    }
+});*/
+
 
 server.listen(8080);
