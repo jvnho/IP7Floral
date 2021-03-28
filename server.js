@@ -4,43 +4,39 @@ const session = require('express-session');
 const ejs = require("ejs");
 const path = require("path");
 //const bodyParser = require('body-parser')
-const mysql = require('mysql');
 
 const server = express();
 
 server.set('view engine','ejs');
-
+    
 server.use(express.urlencoded({extended:false}));
 server.use(session({secret: 'lalalala', saveUninitialized: true, resave: true}));
 
 server.use("/", express.static(__dirname + '/views/'));
 server.use("/", express.static(__dirname + '/public/'));
 
+const database = require('./database');
+
 server.post("/login", function(req,res)
 {
-    var login = req.body.login, password = req.body.password;
-    const db = mysql.createConnection(
-    {
-        host: "localhost",
-        user: "root",
-        password: "Nicola$32",
-        database: "ip7floral"
-    });
-    db.connect();
-    db.query('SELECT * FROM utilisateur WHERE username = ? AND password = ?', [login, password], function(err, rows, fields) 
+    var login = (req.body.login).trim(), password = req.body.password;
+    database.query('SELECT * FROM utilisateur WHERE username = ? AND password = ?', [login, password], function(err, rows, fields) 
     {
         if (err) throw err;
         if(rows.length > 0)
         {
             req.session.initialized = true;
             req.session.username = login;
-            db.query('SELECT code FROM utilisateur WHERE username = ?', [login], function(err, rows, fields) 
+            database.query('SELECT code FROM utilisateur WHERE username = ?', [login], function(err, rows, fields) 
             {
                 req.session.code = parseInt(rows[0].code, 10);
                 res.redirect("/home/");
             });
+            database.end();
+            if (err) throw err;
         } else 
         {
+            database.end();
             res.render('login.ejs', {message : "Mot de passe ou utilisateur inexistant"});
         }
     });
