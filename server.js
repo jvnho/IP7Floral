@@ -92,7 +92,6 @@ server.get("/", function(req, res)
     }
 });
 
-/*
 server.get("*", function(req, res)
 {
     if(req.session.initialized)
@@ -101,7 +100,7 @@ server.get("*", function(req, res)
     } else {
         res.redirect('login/');
     }
-});*/
+});
 
 
 server.listen(8080);
