@@ -4,14 +4,15 @@
 
 #gallery .article {
     position: relative;
+    padding: 20px;
 }
 
 #gallery .article img{
+    display: block;
     width: 150px;
     height: auto;
     border: 1px solid #ddd;
     border-radius: 4px; 
-    padding: 5px;
     transition: transform .5s;
 }
 
@@ -21,8 +22,7 @@
 }
 
 #gallery .article .buyBtn {
-    position: absolute;
-    top: 95%;
-    left: 80%;
+    width: 100%;
+    margin-top: 10px;
     cursor: pointer;
 }

@@ -19,8 +19,8 @@ function addImageToGalery(i){
     $('#gallery').append(
         '<div class="article"><img id="bouquet' + i 
         +'" src="../'+ articles[i].location +'" alt="bouquet' + i 
-        +'"> <button id="buyBtn' + i +'" class="buyBtn" id >Acheter</button></div>');
-    $(".buyBtn").hide();  
+        +'"> <button id="buyBtn' + i +'" class="buyBtn" id >Ajouter au panier</button></div>');
+    //$(".buyBtn").hide();  
 }
 
 function buyButtonHandler(){
@@ -28,12 +28,10 @@ function buyButtonHandler(){
 
     $('#gallery').on('mouseover', 'div', function() {
         btnIndex = $(this).index();
-        $('#buyBtn'+btnIndex).fadeIn();
     });
 
     $('#gallery').on('mouseleave', 'div', function() {
-        index = $(this).index();
-        $('#buyBtn'+index).fadeOut(100);
+        btnIndex = $(this).index();
     });
 
     $('#gallery').on('click', '.buyBtn', function() {
