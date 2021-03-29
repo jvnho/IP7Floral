@@ -6,11 +6,17 @@
     <link rel="stylesheet" href="../css/gallery.css">
     <title>Accueil IP7Floral</title>
     <script> 
-        var articles, username = "";
+        var articles, username;
         <% if(typeof articles !== 'undefined') {%> 
             articles = <%- JSON.stringify(articles) %>;
         <% } else { %>
             articles = [];
+        <% } %>
+
+        <% if(typeof username !== 'undefined') {%> 
+            username = <%- JSON.stringify(username) %>;
+        <% } else { %>
+            username = "";
         <% } %>
     </script>
     <script src="../script/home.js"></script>
@@ -25,15 +31,8 @@
         <% } %>
     </header>
 
-    <div class="gallery">
-        <%
-        var i;
-        for(i = 0; i < articles.length; i++){ %>
-            <div class="article">
-                <img id="bouquet<%=i%>"src="../<%= articles[i].location%>" alt="bouquet<%=i%>">
-                <button id="buyBtn<%=i%>" class="buyBtn" id >Acheter</button>
-            </div>
-        <% } %>
+    <div id="gallery">
+        <!-- voir fichier home.js dans public/js/-->
     </div>
     
     <footer>

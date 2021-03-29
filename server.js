@@ -35,7 +35,7 @@ server.post("/login", function(req,res)
         if(rows.length > 0)
         {
             req.session.initialized = true;
-            req.session.username = login;
+            req.session.username = rows[0].username;
             req.session.code = parseInt(rows[0].code, 10);
             res.redirect("/home/");
         } else 
@@ -74,6 +74,14 @@ server.get("/home", function(req,res)
     } else {
         res.redirect('/login/');
     }
+});
+
+
+server.post("/home/cart", function(req, res)
+{
+    console.log("request from " + req.body.article_id + ' ' + req.body.username);
+    var obj_res = {status : "ok"};
+    res.status(200).send(JSON.stringify(obj_res));
 });
 
 server.get("/logout", function(req, res)

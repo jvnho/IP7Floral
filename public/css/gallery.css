@@ -1,12 +1,12 @@
-.gallery{
+#gallery{
     display: inline-grid;
 }
 
-.gallery .article {
+#gallery .article {
     position: relative;
 }
 
-.gallery .article img{
+#gallery .article img{
     width: 150px;
     height: auto;
     border: 1px solid #ddd;
@@ -16,11 +16,11 @@
 }
 
   
-.gallery .article img:hover {
+#gallery .article img:hover {
     transform: scale(1.5);
 }
 
-.gallery .article .buyBtn {
+#gallery .article .buyBtn {
     position: absolute;
     top: 95%;
     left: 80%;
