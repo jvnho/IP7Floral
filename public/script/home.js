@@ -19,8 +19,8 @@ function addImageToGalery(i){
     $('#gallery').append(
         '<div class="article"><img id="bouquet' + i 
         +'" src="../'+ articles[i].location +'" alt="bouquet' + i 
-        +'"> <button id="buyBtn' + i +'" class="buyBtn" id >Ajouter au panier</button></div>');
-    //$(".buyBtn").hide();  
+        +'"><p class="item_price">'+ articles[i].prix+'€</p><button id="buyBtn'+ i 
+        +'" class="buyBtn" id >Ajouter au panier</button></div>');
 }
 
 function buyButtonHandler(){

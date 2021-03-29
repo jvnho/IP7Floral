@@ -21,8 +21,12 @@
     transform: scale(1.5);
 }
 
+#gallery .article .item_price {
+    text-align: center;
+    margin: 5px;
+}
+
 #gallery .article .buyBtn {
     width: 100%;
-    margin-top: 10px;
     cursor: pointer;
 }
