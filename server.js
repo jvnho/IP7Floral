@@ -26,6 +26,16 @@ var pool = mysql.createPool(
     connectionLimit : 10
 });
     
+server.get("/login", function(req,res)
+{
+    if(req.session.initialized)
+    {
+        res.redirect("/home/");
+    } else {
+        res.render('login.ejs');
+    }
+});
+
 server.post("/login", function(req,res)
 {
     var login = (req.body.login).trim(), password = req.body.password;        
@@ -45,14 +55,9 @@ server.post("/login", function(req,res)
     });
 });
 
-server.get("/login", function(req,res)
+server.get("/login/*", function(req,res)
 {
-    if(req.session.initialized)
-    {
-        res.redirect("/home/");
-    } else {
-        res.render('login.ejs');
-    }
+    res.redirect('/login/');
 });
 
 server.get("/home", function(req,res)
@@ -64,7 +69,7 @@ server.get("/home", function(req,res)
             pool.query('SELECT * FROM article', function(err, rows, fields) 
             {
                 if (err) throw err;
-                res.render("client.ejs", {articles: rows, username: req.session.username});
+                res.render("catalogue.ejs", {articles: rows, username: req.session.username});
             });
         } else //vendeur
         {
@@ -76,12 +81,16 @@ server.get("/home", function(req,res)
     }
 });
 
-
 server.post("/home/cart", function(req, res)
 {
     console.log("request from " + req.body.article_id + ' ' + req.body.username);
     var obj_res = {status : "ok"};
     res.status(200).send(JSON.stringify(obj_res));
+});
+
+server.get("/home/*", function(req,res)
+{
+    res.redirect('/home/');
 });
 
 server.get("/logout", function(req, res)
