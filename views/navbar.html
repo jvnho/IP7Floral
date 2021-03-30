@@ -1,0 +1,15 @@
+<script>
+    if(username != null)
+    {
+        $('#nav').append('<button onclick="location.href=\'/logout\'" class="headerBtn" type="button">Se déconnecter</button>');
+    } else 
+    { 
+        $('#nav').append('<button onclick="location.href=\'/login\'" class="headerBtn" type="button">Se connecter</button>');
+    }
+</script>
+
+<div id="nav">
+    <button onclick="location.href='/home'" class="headerBtn">Catalogue</button>
+    <button onclick="location.href='/cart'" class="headerBtn">Mon panier</button>
+    <button onclick="location.href='/orders'" class="headerBtn">Mes commandes</button>
+</div>
