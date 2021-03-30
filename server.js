@@ -26,6 +26,7 @@ var pool = mysql.createPool(
     connectionLimit : 10
 });
     
+//page de login
 server.get("/login", function(req,res)
 {
     if(req.session.initialized)
@@ -46,6 +47,7 @@ server.post("/login", function(req,res)
         {
             req.session.initialized = true;
             req.session.username = rows[0].username;
+            req.session.id = rows[0].user_id;
             req.session.code = parseInt(rows[0].code, 10);
             res.redirect("/home/");
         } else 
@@ -60,6 +62,7 @@ server.get("/login/*", function(req,res)
     res.redirect('/login/');
 });
 
+//page d'achat
 server.get("/home", function(req,res)
 {
     if(req.session.initialized)
@@ -69,7 +72,7 @@ server.get("/home", function(req,res)
             pool.query('SELECT * FROM article', function(err, rows, fields) 
             {
                 if (err) throw err;
-                res.render("catalogue.ejs", {articles: rows, username: req.session.username});
+                res.render("catalogue.ejs", {articles: rows, });
             });
         } else //vendeur
         {
@@ -91,6 +94,24 @@ server.post("/home/cart", function(req, res)
 server.get("/home/*", function(req,res)
 {
     res.redirect('/home/');
+});
+
+//page du panier utilisateur
+server.get("/cart", function(req,res)
+{
+    if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
+    {
+        pool.query('SELECT * FROM panier WHERE user_id = ?', [req.session.id], function(err, rows, fields){
+            res.render('cart.ejs', {panier : rows, username: req.session.username});
+        });
+    } else {
+        res.redirect('/home');
+    }
+});
+
+server.get("/cart/*", function(req,res)
+{
+    res.redirect("/cart");
 });
 
 server.get("/logout", function(req, res)

@@ -27,6 +27,15 @@ CREATE TABLE article(
     UNIQUE(location)
 );
 
+CREATE TABLE quantite(
+    article_id INT AUTO_INCREMENT NOT NULL,
+    user_id INT NOT NULL,
+    quantite INT DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES utilisateur(user_id),
+    FOREIGN KEY (article_id) REFERENCES article(article_id),
+    PRIMARY(article_id,user_id,quantite)
+)
+
 CREATE TABLE panier(
     user_id INT NOT NULL,
     article_id INT NOT NULL,

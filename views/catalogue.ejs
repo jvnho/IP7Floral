@@ -25,14 +25,14 @@
 <body>
     <header>
         <% if(typeof username !== 'undefined') {%> 
-            <button onclick="location.href='/logout'" class="button" type="button" id="headerBtn">Se déconnecter</button>
+            <button onclick="location.href='/logout'" class="button" type="button" id="headerBtn">Se déconnecter(<%=username%>)</button>
         <% } else { %> 
             <button onclick="location.href='/login'" class="button" type="button" id="headerBtn">Se connecter</button>
         <% } %>
     </header>
 
     <div id="nav">
-        <button class="tablinks">Catalogue</button>
+        <button class="tablinks">Notre catalogue</button>
         <button class="tablinks">Mon panier</button>
         <button class="tablinks">Mes commandes</button>
     </div>
