@@ -1,27 +1,8 @@
 $(document).ready(function()
 {    
-    createImageGalery();
-
     buyButtonHandler();
+    initPriceSlider();
 });
-
-function createImageGalery(){
-    $("#gallery").append(function()
-    {
-        var i;
-        for(i =0; i < articles.length; i++){
-            addImageToGalery(i);
-        }
-    });
-}
-
-function addImageToGalery(i){
-    $('#gallery').append(
-        '<div class="article"><img id="bouquet' + i 
-        +'" src="../'+ articles[i].location +'" alt="bouquet' + i 
-        +'"><p class="item_price">'+ articles[i].prix+'€</p><button id="buyBtn'+ i 
-        +'" class="buyBtn" id >Ajouter au panier</button></div>');
-}
 
 function buyButtonHandler(){
     var btnIndex;
@@ -41,4 +22,18 @@ function buyButtonHandler(){
         });
         console.log("post send: " + articles[btnIndex].article_id + " " +  username);
     });
+}
+
+function initPriceSlider()
+{
+    var maxPrice = articles[0].prix;
+    var i;
+    for(i = 1; i < articles.length; i++){
+        if(maxPrice < articles[i].price){
+            maxPrice = articles[i].price;
+        }
+    }
+    var maxPrice = Math.ceil(articles[0].prix);
+    $("#priceSlider").attr("max", maxPrice);
+    $("#priceSlider").attr("value", maxPrice);
 }

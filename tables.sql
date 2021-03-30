@@ -39,7 +39,7 @@ CREATE TABLE panier(
 CREATE TABLE commande(
     commande_id VARCHAR(50) NOT NULL,
     user_id INT NOT NULL,
-    total real DEFAULT 0,
+    total real DEFAULT 0, 
     date_command TIMESTAMP NOT NULL,
     status VARCHAR(256) NOT NULL DEFAULT "En cours de traitement",
     FOREIGN KEY (user_id) REFERENCES utilisateur(user_id),
@@ -54,5 +54,8 @@ INSERT INTO article (location, type, prix) VALUES('img/bouquet1.jpg', 'bouquet',
 INSERT INTO article (location, type, prix) VALUES('img/bouquet2.jpg', 'bouquet', 7.90);
 INSERT INTO article (location, type, prix) VALUES('img/bouquet3.jpg', 'bouquet', 6.99);
 INSERT INTO article (location, type, prix) VALUES('img/bouquet4.jpg', 'bouquet', 6.90);
+INSERT INTO article (location, type, prix) VALUES('img/bouquet5.jpeg', 'bouquet', 6.90);
+INSERT INTO article (location, type, prix) VALUES('img/bouquet6.jpg', 'bouquet', 6.90);
+INSERT INTO article (location, type, prix) VALUES('img/bouquet7.jpg', 'bouquet', 7.99);
 
 pensez aux bouquets personnalisées

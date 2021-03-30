@@ -3,17 +3,16 @@
 }
 
 #gallery .article {
-    position: relative;
     padding: 20px;
+    overflow: hidden;
 }
 
 #gallery .article img{
-    display: block;
-    width: 150px;
-    height: auto;
+    width: 200px;
+    height: 200px;
     border: 1px solid #ddd;
     border-radius: 4px; 
-    transition: transform .5s;
+    transition: transform .5s ease;
 }
 
   
@@ -29,4 +28,8 @@
 #gallery .article .buyBtn {
     width: 100%;
     cursor: pointer;
+}
+
+#priceSlider {
+    width: 200px;
 }
