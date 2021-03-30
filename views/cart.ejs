@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="../css/gallery.css">
     <title>Boutique en ligne de vente de fleurs IP7Floral</title>
     <script> 
-        var articles, username;
-        <% if(typeof articles !== 'undefined') {%> 
-            articles = <%- JSON.stringify(articles) %>;
+        var panier, username;
+        <% if(typeof panier !== 'undefined') {%> 
+            panier = <%- JSON.stringify(panier) %>;
         <% } else { %>
-            articles = [];
+            panier = [];
         <% } %>
 
         <% if(typeof username !== 'undefined') {%> 
@@ -35,23 +35,14 @@
             $("#navContainer").load("../navbar.html");
         });
     </script>
+    
 
-    <div id="priceRange">
-        <h3>Prix</h3>
-        <input id="priceSlider" type="range" name="priceSlider" min="0" value="0" max="0">
-    </div>
-      
-
-    <div id="gallery">
+    <div id="mainContainer">
         <%
-        var i;
-        for(i = 0; i < articles.length; i++){ %>
-            <div class="article">
-                <img id="bouquet<%=i%>" src="../<%=articles[i].location%>"alt="bouquet<%=i%>">
-                <p class="item_price"><%=(articles[i].prix).toFixed(2)%>€</p>
-                <button id="buyBtn<%=i%>" class="buyBtn" id >Ajouter au panier</button>
-            </div>
-        <% } %>
+        if(panier.length == 0) { %>
+            <h1 class="emptyCart">Votre panier est vide.</h1>
+            <h2 class="emptyCart">Ajoutez des articles depuis la rubrique Notre Catalogue</h2>
+        <%} %>
     </div>
     
     <footer>
