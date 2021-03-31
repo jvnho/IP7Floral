@@ -16,11 +16,11 @@ function buyButtonHandler(){
     });
 
     $('#gallery').on('click', '.buyBtn', function() {
-        $.post('/home/cart', {article_id : articles[btnIndex].article_id, username : username}, function(data){
+        $.post('/home/cart', {article_id : articles[btnIndex].article_id}, function(data){
             //callback: changera le panier
-            console.log(data);
+            console.log("receive : " + data);
         });
-        console.log("post send: " + articles[btnIndex].article_id + " " +  username);
+        console.log("post send: " + articles[btnIndex].article_id + " " + articles[btnIndex].prix);
     });
 }
 
@@ -29,8 +29,8 @@ function initPriceSlider()
     var maxPrice = articles[0].prix;
     var i;
     for(i = 1; i < articles.length; i++){
-        if(maxPrice < articles[i].price){
-            maxPrice = articles[i].price;
+        if(maxPrice < articles[i].prix){
+            maxPrice = articles[i].prix;
         }
     }
     var maxPrice = Math.ceil(articles[0].prix);

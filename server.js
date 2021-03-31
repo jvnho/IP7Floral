@@ -47,7 +47,7 @@ server.post("/login", function(req,res)
         {
             req.session.initialized = true;
             req.session.username = rows[0].username;
-            req.session.id = rows[0].user_id;
+            req.session.user_id = parseInt(rows[0].user_id);
             req.session.code = parseInt(rows[0].code, 10);
             res.redirect("/home/");
         } else 
@@ -86,9 +86,28 @@ server.get("/home", function(req,res)
 
 server.post("/home/cart", function(req, res)
 {
-    console.log("request from " + req.body.article_id + ' ' + req.body.username);
-    var obj_res = {status : "ok"};
-    res.status(200).send(JSON.stringify(obj_res));
+    pool.query('SELECT * FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id ,req.body.article_id], function(err1,rows1, fields1)
+    {
+        if(err1) throw err1
+        if(rows1.length == 0)
+        {
+            //insère une nouvelle valeur dans la table 
+            pool.query("INSERT INTO panier (article_id, user_id) VALUES ("+req.body.article_id +","+req.session.user_id+")", function(err2, rows2, fields2)
+            {
+                if(err2) throw err2;
+                res.status(200).end();
+            });
+        } else 
+        {
+            //augmente la quantite de l'article ajouter
+            pool.query('UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?', [parseInt(rows1[0].quantite+1), req.session.user_id, req.body.article_id],function(err3, rows3, fields3)
+            {
+                if(err3) throw err3;
+                res.status(200).end();
+            });
+        }
+    });
+
 });
 
 server.get("/home/*", function(req,res)
@@ -101,23 +120,23 @@ server.get("/cart", function(req,res)
 {
     if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
     {
-        pool.query('SELECT * FROM panier WHERE user_id = ?', [req.session.id], function(err, rows, fields){
+        pool.query('SELECT * FROM panier WHERE user_id = ?', [req.session.user_id], function(err, rows, fields){
             res.render('cart.ejs', {panier : rows, username: req.session.username});
         });
     } else {
-        res.redirect('/home');
+        res.redirect('/home/');
     }
 });
 
 server.get("/cart/*", function(req,res)
 {
-    res.redirect("/cart");
+    res.redirect("/cart/");
 });
 
 server.get("/logout", function(req, res)
 {
     req.session.destroy();
-    res.redirect("/home");
+    res.redirect("/home/");
 });
 
 server.get("/", function(req, res)
