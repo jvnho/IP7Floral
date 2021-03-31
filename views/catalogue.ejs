@@ -38,10 +38,13 @@
 
     <div id="priceRange">
         <h3>Prix</h3>
-        <input id="priceSlider" type="range" name="priceSlider" min="0" value="0" max="0">
+        <label>Minimum</label>
+        <input type="text" class="priceRangeInput" id="priceMinInput" value="0€">
+        <label>Maximum</label>
+        <input type="text" class="priceRangeInput" id="priceMaxInput" value="0€">
+        <input type="button" class="priceRangeInput" id="priceSearchButton" value="Lancer la recherche">
     </div>
       
-
     <div id="gallery">
         <%
         var i;

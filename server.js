@@ -84,6 +84,7 @@ server.get("/home", function(req,res)
     }
 });
 
+//ajout article au panier
 server.post("/home/cart", function(req, res)
 {
     pool.query('SELECT * FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id ,req.body.article_id], function(err1,rows1, fields1)
@@ -110,6 +111,15 @@ server.post("/home/cart", function(req, res)
 
 });
 
+//recherche d'articles selon prix
+server.post("/home/search", function(req,res)
+{
+    pool.query('SELECT * FROM article WHERE prix > ? AND prix < ?', [req.body.min, req.body.max] ,function(err, rows, fields) 
+    {
+        res.send({new_articles : rows});
+    }
+});
+
 server.get("/home/*", function(req,res)
 {
     res.redirect('/home/');
@@ -126,6 +136,12 @@ server.get("/cart", function(req,res)
     } else {
         res.redirect('/home/');
     }
+});
+
+//passer à la commande
+server.post("/cart/buy", function(req,res)
+{
+    //verifier cote client que le pannier n'est pas vide
 });
 
 server.get("/cart/*", function(req,res)

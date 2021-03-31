@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS article;
 DROP TABLE IF EXISTS panier;
 DROP TABLE IF EXISTS commande;
+DROP TABLE IF EXISTS article_commande;
 
 CREATE TABLE utilisateur(
     user_id INT AUTO_INCREMENT NOT NULL,
@@ -36,17 +37,17 @@ CREATE TABLE panier(
 );
 
 CREATE TABLE commande(
-    commande_id VARCHAR(50) NOT NULL,
+    commande_id INT AUTO_INCREMENT,
     user_id INT NOT NULL,
     total real DEFAULT 0, 
     date_command TIMESTAMP NOT NULL,
     status VARCHAR(256) NOT NULL DEFAULT "En cours de traitement",
     FOREIGN KEY (user_id) REFERENCES utilisateur(user_id),
-    PRIMARY KEY(user_id, commande_id)
+    PRIMARY KEY(commande_id)
 );
 
 CREATE TABLE article_commande(
-    commande_id VARCHAR(50) NOT NULL,
+    commande_id INT NOT NULL,
     article_id INT NOT NULL,
     PRIMARY KEY (commande_id, article_id),
     FOREIGN KEY (commande_id) REFERENCES commande(commande_id),

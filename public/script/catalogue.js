@@ -1,7 +1,9 @@
 $(document).ready(function()
 {    
     buyButtonHandler();
-    initPriceSlider();
+    initPriceInput();
+    priceInputHandler();
+    searchPriceBtn();
 });
 
 function buyButtonHandler(){
@@ -17,14 +19,14 @@ function buyButtonHandler(){
 
     $('#gallery').on('click', '.buyBtn', function() {
         $.post('/home/cart', {article_id : articles[btnIndex].article_id}, function(data){
-            //callback: changera le panier
+            //callback: affichera une notification
             console.log("receive : " + data);
         });
         console.log("post send: " + articles[btnIndex].article_id + " " + articles[btnIndex].prix);
     });
 }
 
-function initPriceSlider()
+function initPriceInput()
 {
     var maxPrice = articles[0].prix;
     var i;
@@ -34,6 +36,25 @@ function initPriceSlider()
         }
     }
     var maxPrice = Math.ceil(articles[0].prix);
-    $("#priceSlider").attr("max", maxPrice);
-    $("#priceSlider").attr("value", maxPrice);
+    $("#priceMaxInput").attr("value", maxPrice + "€");
+    $("#priceMax").html(maxPrice + "€");
+}
+
+function priceInputHandler()
+{
+    $('#priceMaxInput #priceMinInput').change(function()
+    {
+
+    });
+}
+
+function searchPriceBtn()
+{
+    $('#priceSearchButton').click(function()
+    {
+        $.post("/home/search", {min: $("#priceMaxInput").attr("value"), max: $("#priceMinInput").attr("value")}, function(data)
+        {
+            //callback
+        });
+    });
 }
