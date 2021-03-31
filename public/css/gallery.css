@@ -20,7 +20,12 @@
     transform: scale(1.5);
 }
 
-#gallery .article .item_price {
+#gallery .article .item_price{
+    text-align: center;
+    margin: 5px;
+}
+
+#gallery .article .item_name{
     text-align: center;
     margin: 5px;
 }

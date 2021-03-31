@@ -1,4 +1,4 @@
-var maxPrice = articles[0].prix; //prix de l'article le plus élevé présent sur la page
+var maxPrice = articles[0].price; //prix de l'article le plus élevé présent sur la page
 
 $(document).ready(function()
 {    
@@ -19,8 +19,8 @@ function createGallery(array){
 function createImageGallery(array, i){
     $("#gallery").append
     (
-        '<div class="article"><img id="bouquet' + i + '" src="../' + array[i].location + '"alt="bouquet' + i 
-        + '"><p class="item_price">' + (array[i].prix).toFixed(2) + '€</p><button id="buyBtn' + i 
+        '<div class="article"><img id="bouquet' + i + '" src="../' + array[i].location + '"alt="bouquet' + i
+        + '"><p class="item_name">' + array[i].name + '</p><p class="item_price">' + (array[i].price).toFixed(2) + '€</p><button id="buyBtn' + i
         + '" class="buyBtn" id >Ajouter au panier</button></div>'
     );
 }
@@ -41,7 +41,7 @@ function buyButtonHandler(){
             //callback: affichera une notification
             console.log("receive : " + data);
         });
-        console.log("post send: " + articles[btnIndex].article_id + " " + articles[btnIndex].prix);
+        console.log("post send: " + articles[btnIndex].article_id + " " + articles[btnIndex].price);
     });
 }
 
@@ -49,11 +49,11 @@ function initPriceInput()
 {
     var i;
     for(i = 1; i < articles.length; i++){
-        if(maxPrice < articles[i].prix){
-            maxPrice = articles[i].prix;
+        if(maxPrice < articles[i].price){
+            maxPrice = articles[i].price;
         }
     }
-    maxPrice = Math.ceil(articles[0].prix);
+    maxPrice = Math.ceil(articles[0].price);
     $("#priceMaxInput").attr("value", maxPrice);
 }
 
