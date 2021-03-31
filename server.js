@@ -114,10 +114,11 @@ server.post("/home/cart", function(req, res)
 //recherche d'articles selon prix
 server.post("/home/search", function(req,res)
 {
-    pool.query('SELECT * FROM article WHERE prix > ? AND prix < ?', [req.body.min, req.body.max] ,function(err, rows, fields) 
+    pool.query('SELECT * FROM article WHERE prix > ? AND prix < ?', [req.body.min, req.body.max], function(err, rows, fields) 
     {
+        if(err) throw err
         res.send({new_articles : rows});
-    }
+    });
 });
 
 server.get("/home/*", function(req,res)

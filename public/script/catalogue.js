@@ -1,10 +1,29 @@
+var maxPrice = articles[0].prix; //prix de l'article le plus élevé présent sur la page
+
 $(document).ready(function()
 {    
+    createGallery(articles);        
     buyButtonHandler();
     initPriceInput();
     priceInputHandler();
     searchPriceBtn();
 });
+
+function createGallery(array){
+    var i;
+    for(i = 0; i < array.length; i++){
+        createImageGallery(array, i);
+    }
+}   
+
+function createImageGallery(array, i){
+    $("#gallery").append
+    (
+        '<div class="article"><img id="bouquet' + i + '" src="../' + array[i].location + '"alt="bouquet' + i 
+        + '"><p class="item_price">' + (array[i].prix).toFixed(2) + '€</p><button id="buyBtn' + i 
+        + '" class="buyBtn" id >Ajouter au panier</button></div>'
+    );
+}
 
 function buyButtonHandler(){
     var btnIndex;
@@ -28,23 +47,21 @@ function buyButtonHandler(){
 
 function initPriceInput()
 {
-    var maxPrice = articles[0].prix;
     var i;
     for(i = 1; i < articles.length; i++){
         if(maxPrice < articles[i].prix){
             maxPrice = articles[i].prix;
         }
     }
-    var maxPrice = Math.ceil(articles[0].prix);
-    $("#priceMaxInput").attr("value", maxPrice + "€");
-    $("#priceMax").html(maxPrice + "€");
+    maxPrice = Math.ceil(articles[0].prix);
+    $("#priceMaxInput").attr("value", maxPrice);
 }
 
 function priceInputHandler()
 {
-    $('#priceMaxInput #priceMinInput').change(function()
+    $('#priceMaxInput,#priceMinInput').change(function()
     {
-
+        $(this).attr('value', $(this).val());   
     });
 }
 
@@ -52,9 +69,13 @@ function searchPriceBtn()
 {
     $('#priceSearchButton').click(function()
     {
-        $.post("/home/search", {min: $("#priceMaxInput").attr("value"), max: $("#priceMinInput").attr("value")}, function(data)
+        if($.isNumeric($("#priceMinInput, #priceMaxInput").attr("value")))
         {
-            //callback
-        });
+            $.post("/home/search", {min: $("#priceMinInput").attr("value"), max: $("#priceMaxInput").attr("value")}, function(data)
+            {
+                $("#gallery").empty();
+                createGallery(data.new_articles);
+            });
+        }
     });
 }

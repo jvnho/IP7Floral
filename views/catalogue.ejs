@@ -37,24 +37,18 @@
     </script>
 
     <div id="priceRange">
-        <h3>Prix</h3>
+        <h3>Prix (en euros)</h3>
         <label>Minimum</label>
-        <input type="text" class="priceRangeInput" id="priceMinInput" value="0€">
+        <input type="text" class="priceRangeInput" id="priceMinInput" value="0">
         <label>Maximum</label>
-        <input type="text" class="priceRangeInput" id="priceMaxInput" value="0€">
+        <input type="text" class="priceRangeInput" id="priceMaxInput" value="0">
         <input type="button" class="priceRangeInput" id="priceSearchButton" value="Lancer la recherche">
     </div>
       
     <div id="gallery">
-        <%
-        var i;
-        for(i = 0; i < articles.length; i++){ %>
-            <div class="article">
-                <img id="bouquet<%=i%>" src="../<%=articles[i].location%>"alt="bouquet<%=i%>">
-                <p class="item_price"><%=(articles[i].prix).toFixed(2)%>€</p>
-                <button id="buyBtn<%=i%>" class="buyBtn" id >Ajouter au panier</button>
-            </div>
-        <% } %>
+        <!-- 
+            remplit par la fonction createGallery du script catalogue.js
+        -->
     </div>
     
     <footer>
