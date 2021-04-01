@@ -3,7 +3,6 @@ var valeurTotalPanier;
 $(document).ready(function()
 {    
     initPanier(panier);
-    orderCommandBtn();
 });
 
 function initPanier(panier){
@@ -23,7 +22,7 @@ function initPanier(panier){
         valeurTotalPanier = valeurTotalPanier.toPrecision(4);
         $("#mainContainer").append(
             '<p id="totalText">Total: ' + valeurTotalPanier + '€</p>'+
-            '<button id="orderBtn">Commander</button>'
+            '<button id="orderBtn" onclick="orderCommandBtn()">Commander</button>'
         );
     }
 }
@@ -102,23 +101,23 @@ function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
 }
 
 function deleteBtnHandler(btn_clicked, article_id){
-    $.post("cart/remove", {article_id : article_id}, function(data){
-        //update le contenu de la page avec un pseudo-refresh (empty + recreation des divs)
+    $.post("cart/remove", {article_id : article_id}, function(data)
+    {
         $("#mainContainer").empty();
         initPanier(data.new_panier);
     });
 }
 
 function orderCommandBtn(){
-    $("#orderBtn").click(function()
+    if(panier.length > 0)
     {
-        if(panier.length > 0)
-        {
-            $.post("/cart/order", {panier : panier, total: parseFloat(valeurTotalPanier)});
-        } 
-        else 
-        {
-            //error message notification
-        }
-    });
+        console.log(panier);
+        $.post("/cart/order", {panier: JSON.stringify(panier), total : valeurTotalPanier}, function(){
+
+        });
+    } 
+    else 
+    {
+        //error message notification
+    }
 }

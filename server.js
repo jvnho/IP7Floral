@@ -179,7 +179,7 @@ server.post("/cart/update", function(req,res)
 //passer à la commande
 server.post("/cart/order", function(req,res)
 {
-    console.log(JSON.stringify(req.body.panier));
+    var panier = JSON.parse(req.body.panier);
     var query = "INSERT INTO commande(user_id, total, date_command) VALUES("+ req.session.user_id+"," 
     + req.body.total + ", CURRENT_TIME())";
     pool.query(query, function(err, rows, fields)
@@ -191,17 +191,31 @@ server.post("/cart/order", function(req,res)
             if(err) throw err;
             var commande_id = rows[0].commande_id;
             var i, query;
-            for(i = 0; i < req.body.panier.length; i++)
+            for(i = 0; i < panier.length; i++)
             {
-                query = "INSERT INTO article_commande VALUES ?"
-                pool.query(query,[commande_id, req.body.panier[i].article_id] ,function(err, rows, fields)
+                query = "INSERT INTO article_commande VALUES ?" //ERREUR ICI POSSIBLEMENT
+                pool.query(query,[commande_id, panier[i].article_id] ,function(err, rows, fields)
                 {
                     if(err) throw err;
                 });
             }
-            res.redirect("/orders")
+            res.redirect("/orders");
         });
     });
+});
+
+server.get("/orders/", function(req,res){
+    if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
+    {
+        pool.query('SELECT * FROM commande AS c, article_commande AS ac WHERE c.user_id = ? AND c.commande_id = ac.commande_id', [req.session.user_id], function(err, rows, fields){
+            if(err) throw err;
+            res.render('orders.ejs', {commandes : rows, username: req.session.username});
+        });
+    } else if(req.session.initialized && req.session.code == 11){//utilisateur connecté et utilisateur fleuriste
+        
+    } else {
+        res.redirect('/home/');
+    }
 });
 
 server.get("/cart/*", function(req,res)
