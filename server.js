@@ -72,7 +72,7 @@ server.get("/home", function(req,res)
             pool.query('SELECT * FROM article', function(err, rows, fields) 
             {
                 if (err) throw err;
-                res.render("catalogue.ejs", {articles: rows, });
+                res.render("catalogue.ejs", {articles: rows});
             });
         } else //vendeur
         {
@@ -138,6 +138,7 @@ server.get("/cart", function(req,res)
     if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
     {
         pool.query('SELECT * FROM panier WHERE user_id = ?', [req.session.user_id], function(err, rows, fields){
+            if(err) throw err;
             res.render('cart.ejs', {panier : rows, username: req.session.username});
         });
     } else {
