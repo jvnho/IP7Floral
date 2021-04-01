@@ -177,9 +177,31 @@ server.post("/cart/update", function(req,res)
 });
 
 //passer à la commande
-server.post("/cart/buy", function(req,res)
+server.post("/cart/order", function(req,res)
 {
-    //verifier cote client que le pannier n'est pas vide
+    console.log(JSON.stringify(req.body.panier));
+    var query = "INSERT INTO commande(user_id, total, date_command) VALUES("+ req.session.user_id+"," 
+    + req.body.total + ", CURRENT_TIME())";
+    pool.query(query, function(err, rows, fields)
+    {
+        if(err) throw err;
+        var query = "SELECT commande_id FROM commande ORDER BY commande_id DESC LIMIT 1";
+        pool.query(query, function(err, rows, fields)
+        {
+            if(err) throw err;
+            var commande_id = rows[0].commande_id;
+            var i, query;
+            for(i = 0; i < req.body.panier.length; i++)
+            {
+                query = "INSERT INTO article_commande VALUES ?"
+                pool.query(query,[commande_id, req.body.panier[i].article_id] ,function(err, rows, fields)
+                {
+                    if(err) throw err;
+                });
+            }
+            res.redirect("/orders")
+        });
+    });
 });
 
 server.get("/cart/*", function(req,res)
@@ -212,6 +234,5 @@ server.get("*", function(req, res)
         res.redirect('login/');
     }
 });
-
 
 server.listen(8080);

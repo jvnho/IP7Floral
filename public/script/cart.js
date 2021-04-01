@@ -3,6 +3,7 @@ var valeurTotalPanier;
 $(document).ready(function()
 {    
     initPanier(panier);
+    orderCommandBtn();
 });
 
 function initPanier(panier){
@@ -74,7 +75,7 @@ function decreaseBtnHandler(btn_clicked, article_id, article_quantity, index){
         }
         $("#totalText").html("Total: " + valeurTotalPanier+ "€");
         //respect de l'invariant
-        $(btn_clicked).attr('onlick','deleteBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity-1)+','+index);
+        $(btn_clicked).attr('onlick','decreaseBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity-1)+','+index);
         if(article_quantity-1 <= 1){
             $(btn_clicked).prop('disabled', true);
         }
@@ -95,7 +96,7 @@ function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
             valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(4);
         }
         $("#totalText").html("Total: " + valeurTotalPanier+ "€");
-        $(btn_clicked).attr('onlick','deleteBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity+1)+','+index);
+        $(btn_clicked).attr('onlick','increaseBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity+1)+','+index);
         $(btn_clicked).prop('disabled', false);
     });
 }
@@ -108,9 +109,16 @@ function deleteBtnHandler(btn_clicked, article_id){
     });
 }
 
-function orderCommand(){
+function orderCommandBtn(){
     $("#orderBtn").click(function()
     {
-
+        if(panier.length > 0)
+        {
+            $.post("/cart/order", {panier : panier, total: parseFloat(valeurTotalPanier)});
+        } 
+        else 
+        {
+            //error message notification
+        }
     });
 }
