@@ -39,9 +39,9 @@ function createArticleDiv(i,panier){
             '<p class="article_name">Nom de l\'article: '+nom+'</p>'+
             '<p class="article_priceUnit">Prix unitaire: '+prix+'€</p>'+
             '<p class="article_quantity">Quantité: '+quantite+'</p>'+
-            '<p class="article_soustotal">Sous-Total: '+sousTotal+'€</p>'+
-            '<button class="articleDecBtn" onclick="decreaseBtnHandler(this,'+panier[i].article_id+')">-</button>'+
-            '<button class="articleIncBtn" onclick="increaseBtnHandler(this,'+panier[i].article_id+')">+</button>'+
+            '<p class="article_sousTotal">Sous-Total: '+sousTotal+'€</p>'+
+            '<button class="articleDecBtn" onclick="decreaseBtnHandler(this,'+panier[i].article_id+','+quantite+','+i+')">-</button>'+
+            '<button class="articleIncBtn" onclick="increaseBtnHandler(this,'+panier[i].article_id+','+quantite+','+i+')">+</button>'+
             '<button class="articleDelBtn" onclick="deleteBtnHandler(this,'+panier[i].article_id+')">Supprimer du panier</button>'+
         '</div>'
     );
@@ -60,17 +60,43 @@ function initButtons(article_container, article_quantity){
 //à propos de la fonction "siblings" de JQuery
 
 //invariant: on peut diminuer la quantité ssi la quantité est >= à 2
-function decreaseBtnHandler(btn_clicked, article_id){
-    $(btn_clicked).siblings('.article_quantity').html("666");
-    $.post("cart/decrease", {article_id : article_id}, function(data){
-        //update le sous total et la quantite de l'article
+function decreaseBtnHandler(btn_clicked, article_id, article_quantity, index){
+    $.post("cart/update", {article_id : article_id, new_quantite : (article_quantity-1)}, function(data)
+    {
+        var price = data.new_panier[index].price;
+        var sousTotal = price * ((article_quantity)-1);
+        $(btn_clicked).siblings('p.article_quantity').html("Quantité: " + (article_quantity-1));
+        $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal);
+        if(parseFloat(valeurTotalPanier) >= 100 ){
+            valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(5);
+        } else {
+            valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(4);
+        }
+        $("#totalText").html("Total: " + valeurTotalPanier+ "€");
+        //respect de l'invariant
+        $(btn_clicked).attr('onlick','deleteBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity-1)+','+index);
+        if(article_quantity-1 <= 1){
+            $(btn_clicked).prop('disabled', true);
+        }
+        console.log($(btn_clicked).attr('onlick'));
     });
 }
 
-function increaseBtnHandler(btn_clicked, article_id){
-    $(btn_clicked).siblings('.article_quantity').html("666");
-    $.post("cart/increase", {article_id : article_id}, function(data){
-        //update le sous total et la quantite de l'article
+function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
+    $.post("cart/update", {article_id : article_id, new_quantite : (article_quantity+1)}, function(data)
+    {
+        var price = data.new_panier[index].price;
+        var sousTotal = price * ((article_quantity)+1);
+        $(btn_clicked).siblings('p.article_quantity').html("Quantité: " + (article_quantity+1));
+        $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal);
+        if(parseFloat(valeurTotalPanier) >= 100 ){
+            valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(5);
+        } else {
+            valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(4);
+        }
+        $("#totalText").html("Total: " + valeurTotalPanier+ "€");
+        $(btn_clicked).attr('onlick','deleteBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity+1)+','+index);
+        $(btn_clicked).prop('disabled', false);
     });
 }
 

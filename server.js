@@ -146,11 +146,26 @@ server.get("/cart", function(req,res)
     }
 });
 
-//client qui enleve un article depuis son panier
+//requete: client qui enleve un article depuis son panier
 //en deux étapes: supprime les tuples voulues et renvoie la table panier à l'utilisateur correspondant
 server.post("/cart/remove", function(req,res)
 {
     pool.query('DELETE FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id, req.body.article_id], function(err,rows,fields)
+    {
+        if(err) throw err;
+        pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields)
+        {
+            if(err) throw err;
+            res.send({new_panier : rows, username: req.session.username});
+        });
+    });
+});
+
+//requete client qui diminue ou augmente la quantite d'un de ses articles de son panier
+//deux etapes similaire à la fonction précédente
+server.post("/cart/update", function(req,res)
+{
+    pool.query('UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?', [req.body.new_quantite, req.session.user_id, req.body.article_id], function(err,rows,fields)
     {
         if(err) throw err;
         pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields)
