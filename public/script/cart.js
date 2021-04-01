@@ -1,12 +1,12 @@
-var valeurTotalPanier = 0.0;
+var valeurTotalPanier;
 
 $(document).ready(function()
 {    
-    console.log(panier);
     initPanier(panier);
 });
 
 function initPanier(panier){
+    valeurTotalPanier = 0.0;
     if(panier.length == 0) 
     { 
         $("#mainContainer").append(
@@ -40,12 +40,46 @@ function createArticleDiv(i,panier){
             '<p class="article_priceUnit">Prix unitaire: '+prix+'€</p>'+
             '<p class="article_quantity">Quantité: '+quantite+'</p>'+
             '<p class="article_soustotal">Sous-Total: '+sousTotal+'€</p>'+
-            '<button class="articleBtn">-</button>'+
-            '<button class="articleBtn">+</button>'+
-            '<button class="articleBtn">Supprimer du panier</button>'+
+            '<button class="articleDecBtn" onclick="decreaseBtnHandler(this,'+panier[i].article_id+')">-</button>'+
+            '<button class="articleIncBtn" onclick="increaseBtnHandler(this,'+panier[i].article_id+')">+</button>'+
+            '<button class="articleDelBtn" onclick="deleteBtnHandler(this,'+panier[i].article_id+')">Supprimer du panier</button>'+
         '</div>'
     );
+    initButtons($(".article").last(), quantite);
     valeurTotalPanier += parseFloat(sousTotal);
+}
+
+function initButtons(article_container, article_quantity){
+    if(article_quantity <=1 )
+    {
+        $(article_container).children('button.articleDecBtn').prop('disabled','true');
+    }
+}
+
+//aide externe: https://stackoverflow.com/questions/7463242/how-do-i-select-a-sibling-element-using-jquery
+//à propos de la fonction "siblings" de JQuery
+
+//invariant: on peut diminuer la quantité ssi la quantité est >= à 2
+function decreaseBtnHandler(btn_clicked, article_id){
+    $(btn_clicked).siblings('.article_quantity').html("666");
+    $.post("cart/decrease", {article_id : article_id}, function(data){
+        //update le sous total et la quantite de l'article
+    });
+}
+
+function increaseBtnHandler(btn_clicked, article_id){
+    $(btn_clicked).siblings('.article_quantity').html("666");
+    $.post("cart/increase", {article_id : article_id}, function(data){
+        //update le sous total et la quantite de l'article
+    });
+}
+
+function deleteBtnHandler(btn_clicked, article_id){
+    $.post("cart/remove", {article_id : article_id}, function(data){
+        //update le contenu de la page avec un pseudo-refresh (empty + recreation des divs)
+        $("#mainContainer").empty();
+        initPanier(data.new_panier);
+    });
 }
 
 function orderCommand(){

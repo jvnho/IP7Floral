@@ -146,6 +146,21 @@ server.get("/cart", function(req,res)
     }
 });
 
+//client qui enleve un article depuis son panier
+//en deux étapes: supprime les tuples voulues et renvoie la table panier à l'utilisateur correspondant
+server.post("/cart/remove", function(req,res)
+{
+    pool.query('DELETE FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id, req.body.article_id], function(err,rows,fields)
+    {
+        if(err) throw err;
+        pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields)
+        {
+            if(err) throw err;
+            res.send({new_panier : rows, username: req.session.username});
+        });
+    });
+});
+
 //passer à la commande
 server.post("/cart/buy", function(req,res)
 {
