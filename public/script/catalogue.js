@@ -19,9 +19,12 @@ function createGallery(array){
 function createImageGallery(array, i){
     $("#gallery").append
     (
-        '<div class="article"><img id="bouquet' + i + '" src="../' + array[i].location + '"alt="bouquet' + i
-        + '"><p class="item_name">' + array[i].name + '</p><p class="item_price">' + (array[i].price).toFixed(2) + '€' + 
-        '</p><button id="' + array[i].name + '"class="buyBtn">Ajouter au panier</button></div>'
+        '<div class="article">' +
+            '<img id="bouquet'+i+'" src="../'+array[i].location + '" alt="bouquet'+i+'">'+ 
+            '<p class="item_name">'+array[i].name+'</p>'+
+            '<p class="item_price">'+(array[i].price).toFixed(2)+'€'+'</p>'+
+            '<button id="'+array[i].name+'" class="buyBtn">Ajouter au panier</button>'+
+        '</div>'
     );
 }
 
