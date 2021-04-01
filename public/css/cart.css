@@ -1,4 +1,5 @@
 #mainContainer {   
+    position: relative;
     width: 50%;
     margin: auto;
     border: black 1px solid;
@@ -7,7 +8,7 @@
 #mainContainer .article {   
     width: 75%;
     margin: auto;
-    margin-bottom: 50px;
+    margin-top: 50px;
     border: black 1px solid;
 }
 
@@ -15,4 +16,14 @@
     display: inline-block;
     width: 150px;
     height: 150px;
+}
+
+#mainContainer #totalText{
+    text-align: center;
+}
+
+#mainContainer #orderBtn{
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
 }
