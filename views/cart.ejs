@@ -3,8 +3,8 @@
 <head>
     <script src="../jquery/jquery.js"></script>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/gallery.css">
-    <title>Boutique en ligne de vente de fleurs IP7Floral</title>
+    <link rel="stylesheet" href="../css/cart.css">
+    <title>Mon panier</title>
     <script> 
         var panier, username;
         <% if(typeof panier !== 'undefined') {%> 
@@ -19,7 +19,7 @@
             username = "";
         <% } %>
     </script>
-    <script src=""></script>
+    <script src="../script/cart.js"></script>
 </head>
 
 <body>
@@ -38,11 +38,7 @@
     
 
     <div id="mainContainer">
-        <%
-        if(panier.length == 0) { %>
-            <h1 class="emptyCart">Votre panier est vide.</h1>
-            <h2 class="emptyCart">Ajoutez des articles depuis la rubrique Notre Catalogue</h2>
-        <%} %>
+            <!-- remplit par le script cart.js -->
     </div>
     
     <footer>

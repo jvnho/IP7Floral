@@ -1,0 +1,18 @@
+#mainContainer {   
+    width: 50%;
+    margin: auto;
+    border: black 1px solid;
+}
+
+#mainContainer .article {   
+    width: 75%;
+    margin: auto;
+    margin-bottom: 50px;
+    border: black 1px solid;
+}
+
+#mainContainer .article img {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+}

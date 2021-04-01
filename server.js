@@ -137,7 +137,7 @@ server.get("/cart", function(req,res)
 {
     if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
     {
-        pool.query('SELECT * FROM panier WHERE user_id = ?', [req.session.user_id], function(err, rows, fields){
+        pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
             res.render('cart.ejs', {panier : rows, username: req.session.username});
         });
