@@ -32,7 +32,7 @@ CREATE TABLE article(
 CREATE TABLE panier(
     user_id INT NOT NULL,
     article_id INT NOT NULL,
-    quantite INT DEFAULT 0,
+    quantite INT DEFAULT 1,
     FOREIGN KEY (user_id) REFERENCES utilisateur(user_id) ON DELETE CASCADE,
     FOREIGN KEY (article_id) REFERENCES article(article_id) ON DELETE CASCADE
 );

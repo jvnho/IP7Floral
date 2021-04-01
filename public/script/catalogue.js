@@ -20,28 +20,17 @@ function createImageGallery(array, i){
     $("#gallery").append
     (
         '<div class="article"><img id="bouquet' + i + '" src="../' + array[i].location + '"alt="bouquet' + i
-        + '"><p class="item_name">' + array[i].name + '</p><p class="item_price">' + (array[i].price).toFixed(2) + '€</p><button id="buyBtn' + i
-        + '" class="buyBtn" id >Ajouter au panier</button></div>'
+        + '"><p class="item_name">' + array[i].name + '</p><p class="item_price">' + (array[i].price).toFixed(2) + '€' + 
+        '</p><button id="' + array[i].name + '"class="buyBtn">Ajouter au panier</button></div>'
     );
 }
 
 function buyButtonHandler(){
-    var btnIndex;
-
-    $('#gallery').on('mouseover', 'div', function() {
-        btnIndex = $(this).index();
-    });
-
-    $('#gallery').on('mouseleave', 'div', function() {
-        btnIndex = $(this).index();
-    });
-
     $('#gallery').on('click', '.buyBtn', function() {
-        $.post('/home/cart', {article_id : articles[btnIndex].article_id}, function(data){
+        $.post('/home/cart', {article_name : $(this).attr('id')}, function(data){
             //callback: affichera une notification
             console.log("receive : " + data);
         });
-        console.log("post send: " + articles[btnIndex].article_id + " " + articles[btnIndex].price);
     });
 }
 

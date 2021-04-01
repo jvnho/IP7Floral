@@ -87,28 +87,34 @@ server.get("/home", function(req,res)
 //ajout article au panier
 server.post("/home/cart", function(req, res)
 {
-    pool.query('SELECT * FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id ,req.body.article_id], function(err1,rows1, fields1)
+    //premiere requete: récupère l'id de l'article à partir du nom depuis la requete avec JQuery
+    pool.query('SELECT * FROM article WHERE name = ?', [req.body.article_name], function(err0,rows0, fields0)
     {
-        if(err1) throw err1
-        if(rows1.length == 0)
+        if(err0) throw err0;
+        var article_id = parseInt(rows0[0].article_id);
+        //premiere requete: récupère l'id de l'article à partir du nom qu'on a récupéré
+        pool.query('SELECT * FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id , article_id], function(err1,rows1, fields1)
         {
-            //insère une nouvelle valeur dans la table 
-            pool.query("INSERT INTO panier (article_id, user_id) VALUES ("+req.body.article_id +","+req.session.user_id+")", function(err2, rows2, fields2)
+            if(err1) throw err1
+            if(rows1.length == 0)
             {
-                if(err2) throw err2;
-                res.status(200).end();
-            });
-        } else 
-        {
-            //augmente la quantite de l'article ajouter
-            pool.query('UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?', [parseInt(rows1[0].quantite+1), req.session.user_id, req.body.article_id],function(err3, rows3, fields3)
+                //le panier ne contient pas cet article: insère une nouvelle valeur dans la table 
+                pool.query("INSERT INTO panier (article_id, user_id) VALUES ("+article_id +","+req.session.user_id+")", function(err2, rows2, fields2)
+                {
+                    if(err2) throw err2;
+                    res.status(200).end();
+                });
+            } else 
             {
-                if(err3) throw err3;
-                res.status(200).end();
-            });
-        }
+                //le panier contient deja cet article: augmente la quantite de l'article ajouté
+                pool.query('UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?', [parseInt(rows1[0].quantite+1), req.session.user_id, article_id],function(err3, rows3, fields3)
+                {
+                    if(err3) throw err3;
+                    res.status(200).end();
+                });
+            }
+        });
     });
-
 });
 
 //recherche d'articles selon prix
