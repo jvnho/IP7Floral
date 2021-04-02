@@ -50,6 +50,7 @@ CREATE TABLE commande(
 CREATE TABLE article_commande(
     commande_id INT NOT NULL,
     article_id INT NOT NULL,
+    quantite INT DEFAULT 1,
     PRIMARY KEY (commande_id, article_id),
     FOREIGN KEY (commande_id) REFERENCES commande(commande_id) ON DELETE CASCADE,
     FOREIGN KEY (article_id) REFERENCES article(article_id) ON DELETE CASCADE

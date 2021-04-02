@@ -180,38 +180,45 @@ server.post("/cart/update", function(req,res)
 server.post("/cart/order", function(req,res)
 {
     var panier = JSON.parse(req.body.panier);
-    var query = "INSERT INTO commande(user_id, total, date_command) VALUES("+ req.session.user_id+"," 
-    + req.body.total + ", CURRENT_TIME())";
+    var query = "INSERT INTO commande(user_id, total, date_command) VALUES("+ req.session.user_id+","+ req.body.total + ", CURRENT_TIME())";
+    //créer un nouveau tuple dans la table commande
     pool.query(query, function(err, rows, fields)
     {
         if(err) throw err;
+        //récupère l'id de cette dernière
         var query = "SELECT commande_id FROM commande ORDER BY commande_id DESC LIMIT 1";
         pool.query(query, function(err, rows, fields)
         {
             if(err) throw err;
+            //ajout dans article_commande chaque article présent dans le panier du client
             var commande_id = rows[0].commande_id;
             var i, query;
             for(i = 0; i < panier.length; i++)
             {
-                query = "INSERT INTO article_commande VALUES ?" //ERREUR ICI POSSIBLEMENT
-                pool.query(query,[commande_id, panier[i].article_id] ,function(err, rows, fields)
+                query = "INSERT INTO article_commande(commande_id, article_id, quantite) VALUES ("+commande_id+","+panier[i].article_id+","+panier[i].quantite+")";
+                pool.query(query,function(err, rows, fields)
                 {
                     if(err) throw err;
                 });
             }
-            res.redirect("/orders");
+            //vide la panier courant du client
+            pool.query('DELETE FROM panier WHERE user_id = ?', [req.session.user_id],function(err, rows, fields)
+            {
+                if(err) throw err;
+                res.send("/orders/");
+            });
         });
     });
 });
 
-server.get("/orders/", function(req,res){
+server.get("/orders", function(req,res){
     if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
     {
-        pool.query('SELECT * FROM commande AS c, article_commande AS ac WHERE c.user_id = ? AND c.commande_id = ac.commande_id', [req.session.user_id], function(err, rows, fields){
+        pool.query('SELECT * FROM commande c NATURAL JOIN article_commande ac WHERE c.user_id = ?', [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
             res.render('orders.ejs', {commandes : rows, username: req.session.username});
         });
-    } else if(req.session.initialized && req.session.code == 11){//utilisateur connecté et utilisateur fleuriste
+    } else if(req.session.initialized && req.session.code == 1){//utilisateur connecté et utilisateur fleuriste
         
     } else {
         res.redirect('/home/');

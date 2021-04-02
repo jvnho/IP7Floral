@@ -109,15 +109,7 @@ function deleteBtnHandler(btn_clicked, article_id){
 }
 
 function orderCommandBtn(){
-    if(panier.length > 0)
-    {
-        console.log(panier);
-        $.post("/cart/order", {panier: JSON.stringify(panier), total : valeurTotalPanier}, function(){
-
-        });
-    } 
-    else 
-    {
-        //error message notification
-    }
+    $.post("/cart/order", {panier: JSON.stringify(panier), total : valeurTotalPanier}, function(data){
+        window.location.replace(data);
+    });
 }
