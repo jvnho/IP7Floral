@@ -30,9 +30,11 @@ function createImageGallery(array, i){
 
 function buyButtonHandler(){
     $('#gallery').on('click', '.buyBtn', function() {
-        $.post('/home/cart', {article_name : $(this).attr('id')}, function(data){
-            //callback: affichera une notification
-            console.log("receive : " + data);
+        $.post('/home/cart', {article_name : $(this).attr('id')}, function(data)
+        {
+            $(".footer").children("p").html("Article ajouté au panier");
+            $(".footer").css('background-color', 'green');
+            $(".footer").show().delay(1000).fadeOut();
         });
     });
 }
