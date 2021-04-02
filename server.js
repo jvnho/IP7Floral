@@ -37,6 +37,7 @@ server.get("/login", function(req,res)
     }
 });
 
+//traitement du formulaire de login
 server.post("/login", function(req,res)
 {
     var login = (req.body.login).trim(), password = req.body.password;        
@@ -161,7 +162,7 @@ server.post("/cart/remove", function(req,res)
     });
 });
 
-//requete client qui diminue ou augmente la quantite d'un de ses articles de son panier
+//requete client qui change la quantite d'un de ses articles de son panier
 //deux etapes similaire à la fonction précédente
 server.post("/cart/update", function(req,res)
 {
@@ -211,23 +212,34 @@ server.post("/cart/order", function(req,res)
     });
 });
 
-server.get("/orders", function(req,res){
+server.get("/cart/*", function(req,res)
+{
+    res.redirect("/cart/");
+});
+
+
+server.get("/orders", function(req,res)
+{
     if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
     {
-        pool.query('SELECT * FROM commande c NATURAL JOIN article_commande ac WHERE c.user_id = ?', [req.session.user_id], function(err, rows, fields){
+        pool.query('SELECT * FROM commande', [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
             res.render('orders.ejs', {commandes : rows, username: req.session.username});
         });
-    } else if(req.session.initialized && req.session.code == 1){//utilisateur connecté et utilisateur fleuriste
+    } else if(req.session.initialized && req.session.code == 1) //utilisateur connecté et utilisateur fleuriste
+    {
         
     } else {
         res.redirect('/home/');
     }
 });
 
-server.get("/cart/*", function(req,res)
-{
-    res.redirect("/cart/");
+server.post("/orders", function(req,res){
+    pool.query('SELECT * FROM article_commande ac, article art WHERE ac.commande_id = ? AND ac.article_id = art.article_id', [req.body.commande_id], function(err, rows, fields)
+    {
+        if(err) throw err;
+        res.send({articles : rows});
+    });
 });
 
 server.get("/logout", function(req, res)

@@ -15,8 +15,12 @@
 </script>
 
 <style>
+    body{
+        margin: 0;
+    }
+
     #nav{
-        position: fixed;
+        position: relative;
         left: 0;
         top: 0;
         width: 100%;
@@ -34,14 +38,13 @@
         background-color: inherit;
         padding: 19px;
         outline: none;
+        transition: 0.25s;
     }
 
     #nav button:hover{
         border: 0;
         cursor: pointer;
-        color: rgb(140, 0, 255);    
-        text-decoration-line: underline;
-        text-decoration-color: rgb(140, 0, 255);
+        background-color: lightgray;
         padding: 19px;
     }
 </style>

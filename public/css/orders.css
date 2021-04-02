@@ -1,0 +1,35 @@
+#mainContainer{
+    height: 100%;
+    width: 50%;
+    margin: auto;
+}
+
+#mainContainer .commande {
+    display: block;
+    border: black 1px solid;
+    margin: auto;
+    margin-top: 50px;
+    width: 100%;
+}
+
+#mainContainer .commande p{
+    margin: 10px;
+}
+
+#mainContainer .article .imgContainer{
+    width: 50%;
+    border: 1px solid black;
+}
+
+#mainContainer .article .imgContainer img{
+    display: relative;
+    width: 200px;
+    margin: 10px;
+    clear: both;
+}
+
+#mainContainer .article .infoContainer{
+    height: 100%;
+    width: 50%;
+    border: 1px solid red;
+}
