@@ -1,13 +1,16 @@
 $(document).ready(function()
 {
-    $("#errorMessage").html(errorMessage);
+    submitFormHandler();
+});
 
+function submitFormHandler(){
     $("#logForm").submit(function()
     {
         if($("#login").val() === "" || $("#password").val() === "")
         {
-            errorMessage = "Veillez remplir tous les champs";
-            $("#errorMessage").html(errorMessage);
+            $("#notification").children("p").html("Veillez remplir tous les champs");
+            $("#notification").css('background-color', 'red');
+            $("#notification").show().delay(5000).fadeOut();
             $("#login").css("border", "red solid 1px"); 
             $("#password").css("border", "red solid 1px"); 
             if($("#login").val() !== "") $("#login").css("border", "green solid 1px"); 
@@ -16,4 +19,4 @@ $(document).ready(function()
         }
         return true;
     });
-});
+}
