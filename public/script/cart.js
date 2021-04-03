@@ -24,7 +24,7 @@ function initPanier(panier){
         valeurTotalPanier = valeurTotalPanier.toPrecision(4);
         $("#mainContainer").append(
             '<p id="totalText">Total: ' + valeurTotalPanier + '€</p>'+
-            '<button id="orderBtn" onclick="orderCommandBtn()">Commander</button>'
+            '<button id="orderBtn" onclick="orderCommandBtn()">Passer à la commande</button>'
         );
     }
 }
