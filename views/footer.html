@@ -1,13 +1,16 @@
 <!-- source : https://www.w3schools.com/howto/howto_css_fixed_footer.asp -->
 
-<div class="footer">
-    <p></p>
-</div>
+
+<p></p>
+
+<script>
+    $("#notification").hide();
+</script>
 
 <style>
-    .footer 
+    #notification 
     {
-      position: relative;
+      position: fixed;
       left: 0;
       bottom: 0;
       width: 100%;
@@ -16,7 +19,3 @@
       text-align: center;
     }
 </style>
-
-<script>
-    $(".footer").hide();
-</script>

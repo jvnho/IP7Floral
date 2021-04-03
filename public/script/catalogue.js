@@ -32,9 +32,9 @@ function buyButtonHandler(){
     $('#gallery').on('click', '.buyBtn', function() {
         $.post('/home/cart', {article_name : $(this).attr('id')}, function(data)
         {
-            $(".footer").children("p").html("Article ajouté au panier");
-            $(".footer").css('background-color', 'green');
-            $(".footer").show().delay(1000).fadeOut();
+            $("#notification").children("p").html("Article ajouté au panier");
+            $("#notification").css('background-color', 'green');
+            $("#notification").show().delay(1000).fadeOut();
         });
     });
 }
