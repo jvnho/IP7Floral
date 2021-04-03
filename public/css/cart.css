@@ -65,6 +65,13 @@ button:hover{
     border-color: #FFB6C1;
 }
 
+button:disabled{
+    cursor:not-allowed;
+    background-color: white;
+    color: white;
+    border-color: black;
+}
+
 #mainContainer #orderBtn{
     display: block;
     margin: auto;
