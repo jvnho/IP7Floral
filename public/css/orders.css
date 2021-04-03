@@ -49,3 +49,53 @@ hr{
     border-color: #000000;
     background-color: #000000;
 }
+
+
+/* réservé à l'employé*/
+
+.changeComStatus{
+    text-align: center;
+}
+
+.changeComStatus p{ 
+    display: inline-block;
+}
+
+.changeComStatus {
+    margin-bottom: 20px;
+}
+
+.changeComStatus select{
+    margin: 10px;   
+    padding: 10px;
+    outline: none;
+}
+
+.changeComStatus button{
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* commande vide (client ou employé)*/
+
+#mainContainer .msgContainer{
+    position: relative;
+    margin: auto;
+    top: 50%;
+    transform: translateY(50%);
+    width: 100%;
+    text-align: center;
+}
+.emptyCommand h1{
+    color: #FFC0CB;
+}
+
+.emptyCommand h2{
+    color: #C71585;
+}
+
+.emptyCommand h2 span{
+    font-style: italic;
+}
+/**/

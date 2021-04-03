@@ -10,9 +10,16 @@ $(document).ready(function()
 });
 
 function createGallery(array){
-    var i;
-    for(i = 0; i < array.length; i++){
-        createImageGallery(array, i);
+    if(array.length > 0)
+    {
+        var i;
+        for(i = 0; i < array.length; i++){
+            createImageGallery(array, i);
+        }
+    } else 
+    {
+        $("body").append
+        ('<h1 class="emptyStore">Aucun article trouvé</h1>');
     }
 }   
 

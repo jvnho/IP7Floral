@@ -11,10 +11,19 @@ function initOrderSummary(){
             createOrderDiv(i);
         }
     } else {
-        $("#mainContainer").append(
-            '<h1 class="emptyCommand">Votre n\'avez passé aucune commande sur notre site.</h1>'+
-            '<h2 class="emptyCommand">Visitez notre boutique via la rubrique Notre catalogue</h2>'
-        );
+        if(code == 0)
+        {
+            $("#mainContainer").append(
+                '<h1 class="emptyCommand">Votre n\'avez passé aucune commande sur notre site.</h1>'+
+                '<h2 class="emptyCommand">Visitez notre boutique via la rubrique <span id="ourStore">Notre catalogue</span></h2>'
+            );
+        } else 
+        {
+            $("#mainContainer").append(
+                '<h1 class="emptyCommand">Aucune commande client disponible...</h1>'+
+                '<h2 class="emptyCommand">(pas une raison pour se la couler)</h2>'
+            );
+        }
     }
 }
 
@@ -31,15 +40,17 @@ function createOrderDiv(i){
                 '<p>Date de commande: ' + Date(Date.parse(commandes[i].date))+ '</p>'+
                 '<p>Statut : '+status_command+'</p>'+
             '</div>'+
-            ((code == 0 || status_command === 'Livré') ? '': 
-            '<p class="commande_status">Mettre à jour le statut: </p>'+
-            '<select name="orderStatus" id="statusList'+i+'">'+
-                '<option value="abort" selected>Annulé</option>'+
-                '<option value="attente" selected>En cours de traitement</option>'+
-                '<option value="expedie">Expedié</option>'+
-                '<option value="livre">Livré</option>'+
-            '</select>'+
-            '<button class ="updateStatusBtnClass" onclick="updateClientOrder('+i+')" >Mettre à jour la commande</button>'
+            (code == 0 ? '': 
+            '<div class="changeComStatus">'+
+                '<p class="commande_status">Mettre à jour le statut de la commande: </p>'+
+                '<select name="orderStatus" id="statusList'+i+'">'+
+                    '<option value="abort" selected>Annulé</option>'+
+                    '<option value="attente" selected>En cours de traitement</option>'+
+                    '<option value="expedie">Expedié</option>'+
+                    '<option value="livre">Livré</option>'+
+                '</select>'+
+                '<button class ="updateStatusBtnClass" onclick="updateClientOrder('+i+')" >Mettre à jour la commande</button>'+
+            '</div>'
             )
     );
     var commande_id = commandes[i].commande_id;

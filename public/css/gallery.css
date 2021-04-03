@@ -75,6 +75,7 @@
 
 .priceGroup label{
     margin-right: 10px;
+    font-weight: bolder;
 }
 
 div.priceGroup{
@@ -99,3 +100,7 @@ input[type=text]:focus {
     border-color: #FFC0CB;
 }
 
+h1.emptyStore{
+    text-align: center;
+    color: #FFC0CB;
+}
