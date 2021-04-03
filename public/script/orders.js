@@ -12,8 +12,8 @@ function initOrderSummary(){
         }
     } else {
         $("#mainContainer").append(
-            '<h1 class="emptyCart">Votre n\'avez passé aucune commande sur notre site.</h1>'+
-            '<h2 class="emptyCart">Visitez notre boutique via la rubrique Notre catalogue</h2>'
+            '<h1 class="emptyCommand">Votre n\'avez passé aucune commande sur notre site.</h1>'+
+            '<h2 class="emptyCommand">Visitez notre boutique via la rubrique Notre catalogue</h2>'
         );
     }
 }
@@ -25,10 +25,12 @@ function createOrderDiv(i){
     $("#mainContainer").append
     (
         '<div class="commande" id="commandeSection'+i+'">'+
-            '<p class="commande_ref">Référence commande: '+ref_command+'</p>'+
-            (code == 1 ? '<p>ID Client: ' + commandes[i].user_id+'</p>':'')+
-            '<p class="commande_date">Date de commande: ' + Date(Date.parse(commandes[i].date))+ '</p>'+
-            '<p class="commande_status">Statut : '+status_command+'</p>'+
+            '<div class="infoCommande">'+
+                '<p>Référence commande: '+ref_command+'</p>'+
+                (code == 1 ? '<p>ID Client: ' + commandes[i].user_id+'</p>':'')+
+                '<p>Date de commande: ' + Date(Date.parse(commandes[i].date))+ '</p>'+
+                '<p>Statut : '+status_command+'</p>'+
+            '</div>'+
             ((code == 0 || status_command === 'Livré') ? '': 
             '<p class="commande_status">Mettre à jour le statut: </p>'+
             '<select name="orderStatus" id="statusList'+i+'">'+
@@ -49,17 +51,13 @@ function createOrderDiv(i){
         {
             $("#commandeSection"+i).append(
                 '<div class="article">'+
-                    '<div class="imgContainer">'+
-                        '<img src="../'+ articleCommande[y].location+'" alt="article'+y+'">'+
-                    '</div>'+
-                    '<div class="infoContainer">'+
-                        '<p class="article_name">Nom : '+articleCommande[y].name+'</p>'+
-                        '<p class="article_quantite">Quantité: '+articleCommande[y].quantite+'</p>'+
-                    '</div>'+
+                    '<img src="../'+ articleCommande[y].location+'" alt="article'+y+'">'+
+                    '<p class="article_name">Nom : '+articleCommande[y].name+'</p>'+
+                    '<p class="article_quantite">Quantité: '+articleCommande[y].quantite+'</p>'+
                 '</div>'
             );
         }
-        $("#commandeSection"+i).append('<hr></hr><p>Total(TTC): '+ (commandes[i].total).toFixed(2)+'€</p></div>');
+        $("#commandeSection"+i).append('<hr></hr><p class="totalCommande">Total(TTC): '+ (commandes[i].total).toFixed(2)+'€</p></div>');
     });
 }
 
