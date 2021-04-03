@@ -77,7 +77,7 @@ server.get("/home", function(req,res)
             });
         } else //vendeur
         {
-            res.render("seller.ejs");
+            res.redirect("/orders");
         }
         
     } else {
@@ -220,16 +220,13 @@ server.get("/cart/*", function(req,res)
 
 server.get("/orders", function(req,res)
 {
-    if(req.session.initialized && req.session.code == 0)//utilisateur connecté et utilisateur client
+    if(req.session.initialized )//utilisateur connecté
     {
         pool.query('SELECT * FROM commande', [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
-            res.render('orders.ejs', {commandes : rows, username: req.session.username});
+            res.render('orders.ejs', {commandes : rows, username: req.session.username, code : req.session.code});
         });
-    } else if(req.session.initialized && req.session.code == 1) //utilisateur connecté et utilisateur fleuriste
-    {
-        
-    } else {
+    }else {
         res.redirect('/home/');
     }
 });
@@ -239,6 +236,14 @@ server.post("/orders", function(req,res){
     {
         if(err) throw err;
         res.send({articles : rows});
+    });
+});
+
+server.post("/orders/update", function(req,res){
+    pool.query(req.body.query, function(err, rows, fields)
+    {
+        if(err) throw err;
+        res.res.sendStatus(200);
     });
 });
 

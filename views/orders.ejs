@@ -18,6 +18,12 @@
         <% } else { %>
             username = "";
         <% } %>
+
+        <% if(typeof code !== 'undefined') {%> 
+            code = <%- JSON.stringify(code) %>;
+        <% } else { %>
+            code = "";
+        <% } %>
     </script>
     <script src="../script/orders.js"></script>
 </head>
