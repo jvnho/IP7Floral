@@ -43,11 +43,15 @@
     </script>
 
     <div id="priceRange">
-        <h3>Prix (en euros)</h3>
-        <label>Minimum</label>
-        <input type="text" class="priceRangeInput" id="priceMinInput" value="0">
-        <label>Maximum</label>
-        <input type="text" class="priceRangeInput" id="priceMaxInput" value="0">
+        <h3 id="pricetag">Prix (en euros)</h3>
+        <div class="priceGroup">
+            <label>Minimum</label>
+            <input type="text" class="priceRangeInput" id="priceMinInput" value="0">
+        </div>
+        <div class="priceGroup">
+            <label>Maximum</label>
+            <input type="text" class="priceRangeInput" id="priceMaxInput" value="0">
+        </div>
         <input type="button" class="priceRangeInput" id="priceSearchButton" value="Lancer la recherche">
     </div>
       
