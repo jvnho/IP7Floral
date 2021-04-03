@@ -243,7 +243,7 @@ server.post("/orders/update", function(req,res){
     pool.query(req.body.query, function(err, rows, fields)
     {
         if(err) throw err;
-        res.res.sendStatus(200);
+        res.sendStatus(200);
     });
 });
 
