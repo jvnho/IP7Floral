@@ -58,7 +58,9 @@
 }
 
 #gallery .article .buyBtn:hover {
-    background-color: #D3D5D7;
+    color: white;
+    border-color: #FFC0CB;
+    background-color: #FFC0CB;
 }
 
 #priceSearchButton{
@@ -69,6 +71,7 @@
 #priceSearchButton:hover{
 
 }
+
 h3{
 
 }
@@ -86,5 +89,6 @@ input[type=text]{
 }
 
 input[type=text]:focus {
+    border-color: #FFC0CB;
 }
 

@@ -10,8 +10,10 @@ function initPanier(panier){
     if(panier.length == 0) 
     { 
         $("#mainContainer").append(
-            '<h1 class="emptyCart">Votre panier est vide.</h1>'+
-            '<h2 class="emptyCart">Ajoutez des articles depuis la rubrique Notre Catalogue</h2>'
+            '<div class="msgContainer">'+
+                '<h1 class="emptyCart">Votre panier est vide.</h1>'+
+                '<h2 class="emptyCart">Ajoutez des articles depuis la rubrique Notre Catalogue</h2>'+
+            '</div>'
         );
     } else {
         var i;
@@ -103,6 +105,9 @@ function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
 function deleteBtnHandler(btn_clicked, article_id){
     $.post("cart/remove", {article_id : article_id}, function(data)
     {
+        $("#notification").children("p").html("Article supprimé du panier");
+        $("#notification").css('background-color', 'red');
+        $("#notification").show().delay(3000).fadeOut();
         $("#mainContainer").empty();
         initPanier(data.new_panier);
     });

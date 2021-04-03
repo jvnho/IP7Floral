@@ -3,28 +3,69 @@
     width: 50%;
     margin: auto;
     margin-top: 50px;
-    border: black 1px solid;
 }
+
+#mainContainer .msgContainer{
+    position: relative;
+    margin: auto;
+    top: 50%;
+    transform: translateY(50%);
+    width: 100%;
+    text-align: center;
+}
+.msgContainer h1{
+    color: #FFC0CB;
+}
+
+.msgContainer h2{
+    color: #C71585;
+}
+
 
 #mainContainer .article {   
     width: 75%;
     margin: auto;
     margin-top: 50px;
     border: black 1px solid;
+    text-align: center;
+}
+
+#mainContainer .article button{   
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 15px;
 }
 
 #mainContainer .article img {
-    display: inline-block;
+    float: left;
+    margin: 25px;
     width: 150px;
     height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 4px; 
 }
 
 #mainContainer #totalText{
     text-align: center;
 }
 
+button{
+    cursor: pointer;
+    outline: none;
+    border: 1px solid black;
+    transition: 0.25s ease;
+}
+
+button:hover{
+    background-color: #FFB6C1;
+    color: white;
+    border-color: #FFB6C1;
+}
+
 #mainContainer #orderBtn{
     display: block;
     margin: auto;
     margin-bottom: 20px;
+    width: 50%;
+    padding: 20px;
 }
