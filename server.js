@@ -73,7 +73,7 @@ server.get("/home", function(req,res)
             pool.query('SELECT * FROM article', function(err, rows, fields) 
             {
                 if (err) throw err;
-                res.render("catalogue.ejs", {articles: rows});
+                res.render("catalogue.ejs", {articles: rows, username: req.session.username, code : req.session.code});
             });
         } else //vendeur
         {
@@ -140,7 +140,7 @@ server.get("/cart", function(req,res)
     {
         pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
-            res.render('cart.ejs', {panier : rows, username: req.session.username});
+            res.render('cart.ejs', {panier : rows, username: req.session.username, code : req.session.code});
         });
     } else {
         res.redirect('/home/');
@@ -157,7 +157,7 @@ server.post("/cart/remove", function(req,res)
         pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields)
         {
             if(err) throw err;
-            res.send({new_panier : rows, username: req.session.username});
+            res.send({new_panier : rows, username: req.session.username, code : req.session.code});
         });
     });
 });
@@ -172,7 +172,7 @@ server.post("/cart/update", function(req,res)
         pool.query('SELECT * FROM panier AS p, article AS a WHERE p.user_id = ? AND a.article_id = p.article_id', [req.session.user_id], function(err, rows, fields)
         {
             if(err) throw err;
-            res.send({new_panier : rows, username: req.session.username});
+            res.send({new_panier : rows, username: req.session.username, code : req.session.code});
         });
     });
 });

@@ -2,17 +2,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;1,200&display=swap" rel="stylesheet">
 
-<button onclick="location.href='/home'" class="headerBtn">Notre catalogue</button>
-<button onclick="location.href='/cart'" class="headerBtn">Mon panier</button>
-<button onclick="location.href='/orders'" class="headerBtn">Mes commandes</button>
-
 <script>
+    if(code == 0)
+    {
+        $('#nav').append('<button onclick="location.href=\'/home\'" class="headerBtn">Notre catalogue</button>');
+        $('#nav').append('<button onclick="location.href=\'/cart\'" class="headerBtn">Mon panier</button>');
+        $('#nav').append('<button onclick="location.href=\'/orders\'" class="headerBtn">Mes commandes</button>');
+    } else {
+        $('#nav').append('<button onclick="location.href=\'/orders\'" class="headerBtn">Commandes clients</button>');
+    }
     if(username != null)
     {
-        $('#nav').append('<button onclick="location.href=\'/logout\'" class="headerBtn" type="button">Se déconnecter</button>');
-    } else 
-    { 
-        $('#nav').append('<button onclick="location.href=\'/login\'" class="headerBtn" type="button">Se connecter</button>');
+        $('#nav').append('<button onclick="location.href=\'/logout\'" class="headerBtn" type="button">Se déconnecter ('+username+')</button>');
     }
 </script>
 
