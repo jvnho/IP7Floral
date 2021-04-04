@@ -4,7 +4,6 @@
     <script src="../jquery/jquery.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../css/orders.css">
-    <title>Mes commandes</title>
     <script> 
         var commandes, username;
         <% if(typeof commandes !== 'undefined') {%> 
@@ -25,6 +24,13 @@
             code = "";
         <% } %>
     </script>
+
+    <% if (code == 0) { %>
+        <title>Mes commandes</title>
+    <% } else { %>
+        <title>Commandes clients</title>
+    <% } %>
+
     <script src="../script/orders.js"></script>
 </head>
 
