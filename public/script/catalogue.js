@@ -110,7 +110,9 @@ function buyCustomFlower(){
         {
             var art_name = $(this).children(".item_name").text();
             $.post("/home/cart", {article_name : art_name, article_quantity : art_quantity }, function(req, res){
-                console.log("succès");
+                $("#notification").children("p").html("Article ajouté au panier");
+                $("#notification").css('background-color', 'green');
+                $("#notification").show().delay(1000).fadeOut();
             });
         }
     })
