@@ -8,6 +8,7 @@ $(document).ready(function()
     buyButtonHandler();
     initPriceInput();
     priceInputHandler();
+    quantityChangeHandler();
     searchPriceBtn();
     $("#collection").prop('disabled', true);
     $("#customMessage").hide();
@@ -43,7 +44,7 @@ function createImageGallery(array, i){
             '<img class ="singleFlower" id="fleur'+i+'" src="../'+array[i].location + '" alt="fleur'+i+'">'+ 
             '<p class="item_name">'+array[i].name+'</p>'+
             '<p class="item_price">'+(array[i].price).toFixed(2)+'€'+'</p>'+
-            '<input type="number" id="'+array[i].name+'" min="0" max="10" value="0"></input>'+
+            '<input type="number" class="quantitySelector" min="0" max="10" value="0"></input>'+
         '</div>'
         )
     );
@@ -92,6 +93,30 @@ function swapGallery(){
     });
 }
 
+function quantityChangeHandler(){
+    $('.quantitySelector').change(function()
+    {
+        $(this).attr('value', $(this).val());   
+    });
+}
+
+//constituion d'un bouquet personnalisé
+function buyCustomFlower(){
+    var articleNumber = $("#gallery").children().length;
+    //on regarde là ou la quantité de fleur est supérieure à 1 afin de composer le bouquet perso et le mettre dans la panier
+    $(".article").each(function(){
+        var art_quantity = parseInt($(this).children(".quantitySelector").val());
+        if(art_quantity > 0)
+        {
+            var art_name = $(this).children(".item_name").text();
+            $.post("/home/cart", {article_name : art_name, article_quantity : art_quantity }, function(req, res){
+                console.log("succès");
+            });
+        }
+    })
+}
+
+//bouquet non personnalisé, bouquet de "collection"
 function buyButtonHandler(){
     $('#gallery').on('click', '.buyBtn', function() {
         $.post('/home/cart', {article_name : $(this).attr('id')}, function(data)

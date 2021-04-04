@@ -96,6 +96,7 @@ server.post("/home/swap", function(req,res)
 });
 
 //ajout article au panier
+//invariant: on considère que si le serveur recoit une quantite d'article alors il s'agit d'article pour le bouquet personnalisé
 server.post("/home/cart", function(req, res)
 {
     //premiere requete: récupère l'id de l'article à partir du nom depuis la requete avec JQuery
@@ -103,26 +104,47 @@ server.post("/home/cart", function(req, res)
     {
         if(err0) throw err0;
         var article_id = parseInt(rows0[0].article_id);
-        //premiere requete: récupère l'id de l'article à partir du nom qu'on a récupéré
-        pool.query('SELECT * FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id , article_id], function(err1,rows1, fields1)
+        //deuxieme requete: récupère le panier de l'utilisateur et regarde si l'article n'est pas déjà présent
+        pool.query('SELECT * FROM panier WHERE user_id = ? AND article_id = ?', [req.session.user_id , article_id], function(err1,panier, fields1)
         {
             if(err1) throw err1
-            if(rows1.length == 0)
+            if(typeof req.body.article_quantity === 'undefined')//cas bouquet pre-définis
             {
-                //le panier ne contient pas cet article: insère une nouvelle valeur dans la table 
-                pool.query("INSERT INTO panier (article_id, user_id) VALUES ("+article_id +","+req.session.user_id+")", function(err2, rows2, fields2)
+                if(panier.length == 0)
                 {
-                    if(err2) throw err2;
-                    res.status(200).end();
-                });
-            } else 
+                    //le panier ne contient pas cet article: insère une nouvelle valeur dans la table 
+                    pool.query("INSERT INTO panier (article_id, user_id) VALUES ("+article_id +","+req.session.user_id+")", function(err2, rows2, fields2)
+                    {
+                        if(err2) throw err2;
+                        res.status(200).end();
+                    });
+                } else 
+                {
+                    //le panier contient deja cet article: augmente la quantite de l'article ajouté
+                    pool.query('UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?', [panier[0].quantite+1, req.session.user_id, article_id],function(err3, rows3, fields3)
+                    {
+                        if(err3) throw err3;
+                        res.status(200).end();
+                    });
+                }
+            } else //cas bouquet personnalisé
             {
-                //le panier contient deja cet article: augmente la quantite de l'article ajouté
-                pool.query('UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?', [parseInt(rows1[0].quantite+1), req.session.user_id, article_id],function(err3, rows3, fields3)
+                if(panier.length == 0)
                 {
-                    if(err3) throw err3;
-                    res.status(200).end();
-                });
+                    //le panier ne contient pas cet article: insère une nouvelle valeur dans la table avec la quantité
+                    pool.query("INSERT INTO panier (article_id, user_id, quantite) VALUES ("+article_id +","+req.session.user_id+","+parseInt(req.body.article_quantity)+")", function(err2, rows2, fields2)
+                    {
+                        if(err2) throw err2;
+                        res.status(200).end();
+                    });
+                } else { //panier contient l'article on augmente la quantité
+                    var new_quantity = panier[0].quantite + parseInt(req.body.article_quantity);
+                    pool.query("UPDATE panier SET quantite = ? WHERE user_id = ? AND article_id = ?", [new_quantity, req.session.user_id, article_id],function(err2, rows2, fields2)
+                    {
+                        if(err2) throw err2;
+                        res.status(200).end();
+                    });
+                }
             }
         });
     });
@@ -226,7 +248,6 @@ server.get("/cart/*", function(req,res)
 {
     res.redirect("/cart/");
 });
-
 
 server.get("/orders", function(req,res)
 {
