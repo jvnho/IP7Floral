@@ -70,7 +70,7 @@ server.get("/home", function(req,res)
     {
         if(req.session.code == 0) //client
         { 
-            pool.query('SELECT * FROM article', function(err, rows, fields) 
+            pool.query("SELECT * FROM article WHERE type ='bouquet'", function(err, rows, fields) 
             {
                 if (err) throw err;
                 res.render("catalogue.ejs", {articles: rows, username: req.session.username, code : req.session.code});
@@ -83,6 +83,16 @@ server.get("/home", function(req,res)
     } else {
         res.redirect('/login/');
     }
+});
+
+//permet de changer la vue entre bouquets et bouquets personnalisés
+server.post("/home/swap", function(req,res)
+{
+    pool.query('SELECT * FROM article WHERE type = ?', [req.body.type], function(err, rows, fields) 
+    {
+        if(err) throw err
+        res.send({new_articles : rows});
+    });
 });
 
 //ajout article au panier

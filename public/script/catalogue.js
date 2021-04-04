@@ -1,5 +1,7 @@
 var maxPrice = articles[0].price; //prix de l'article le plus élevé présent sur la page
 
+var showCustom = false; //true = montrer la section pour les bouquets personnalisables, par défaut on montre la collection du site
+
 $(document).ready(function()
 {    
     createGallery(articles);        
@@ -7,6 +9,7 @@ $(document).ready(function()
     initPriceInput();
     priceInputHandler();
     searchPriceBtn();
+    $("#collection").prop('disabled', true);
 });
 
 function createGallery(array){
@@ -26,13 +29,57 @@ function createGallery(array){
 function createImageGallery(array, i){
     $("#gallery").append
     (
+        (showCustom == false ?
         '<div class="article">' +
             '<img id="bouquet'+i+'" src="../'+array[i].location + '" alt="bouquet'+i+'">'+ 
             '<p class="item_name">'+array[i].name+'</p>'+
             '<p class="item_price">'+(array[i].price).toFixed(2)+'€'+'</p>'+
             '<button id="'+array[i].name+'" class="buyBtn">Ajouter au panier</button>'+
         '</div>'
+        : 
+        '<div class="article">' +
+            '<img id="fleur'+i+'" src="../'+array[i].location + '" alt="fleur'+i+'">'+ 
+            '<p class="item_name">'+array[i].name+'</p>'+
+            '<p class="item_price">'+(array[i].price).toFixed(2)+'€'+'</p>'+
+            '<input type="number" id="'+array[i].name+'" min="0" max="100"></input>'+
+        '</div>'
+        )
     );
+}
+
+function showCustomBtn(){
+    if(showCustom == false)
+    {
+        showCustom = true;
+        $("#perso").prop('disabled', true);
+        $("#collection").prop('disabled', false);
+        swapGallery();
+    }
+}
+
+function showCollectionBtn(){
+    if(showCustom == true)
+    {
+        showCustom = false;
+        $("#collection").prop('disabled', true);
+        $("#perso").prop('disabled', false);
+        swapGallery();
+    }
+}
+
+function swapGallery(){
+    var type = "";
+    if(showCustom == true){
+        type = "fleur";
+    } else {
+        type = "bouquet";
+    }
+    console.log("type: " + type);
+    $.post("/home/swap", {type : type}, function(data)
+    {
+        $("#gallery").empty();
+        createGallery(data.new_articles);
+    });
 }
 
 function buyButtonHandler(){

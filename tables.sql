@@ -79,3 +79,10 @@ INSERT INTO article (name, location, type, price) VALUES('Olympe', 'img/bouquet1
 INSERT INTO article (name, location, type, price) VALUES('Jade', 'img/bouquet15.jpg', 'bouquet', 21.99);
 INSERT INTO article (name, location, type, price) VALUES('Louisa', 'img/bouquet16.jpg', 'bouquet', 19.99);
 INSERT INTO article (name, location, type, price) VALUES('Elena', 'img/bouquet17.jpg', 'bouquet', 29.99);
+
+INSERT INTO article (name, location, type, price) VALUES('Lucile', 'img/fleur1.jpg', 'fleur', 5.90);
+INSERT INTO article (name, location, type, price) VALUES('Sofia', 'img/fleur2.jpg', 'fleur', 5.99);
+INSERT INTO article (name, location, type, price) VALUES('Mya', 'img/fleur3.jpg', 'fleur', 6.99);
+INSERT INTO article (name, location, type, price) VALUES('Inaya', 'img/fleur4.jpg', 'fleur', 5.99);
+INSERT INTO article (name, location, type, price) VALUES('Ambre', 'img/fleur5.jpg', 'fleur', 5.99);
+INSERT INTO article (name, location, type, price) VALUES('Louise', 'img/fleur6.jpg', 'fleur', 6.00);
