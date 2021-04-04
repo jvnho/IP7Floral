@@ -33,16 +33,8 @@
             <input type="submit" value="Se connecter" id="subForm">
         </form>
     </div>
-    <div id="notification">
-    </div>
-    <script>
-        $(function()
-        {
-            $("#notification").load("../footer.html");
-        });
 
-        $("#notification").children("p").html(errorMessage);
-        $("#notification").css('background-color', 'red');
-        $("#notification").show().delay(5000).fadeOut();
-    </script>
+    <div id="notification">
+        <p></p>
+    </div>
 </body>
