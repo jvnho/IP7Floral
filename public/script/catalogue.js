@@ -19,6 +19,9 @@ function createGallery(array){
         for(i = 0; i < array.length; i++){
             createImageGallery(array, i);
         }
+        if(showCustom == true){
+            $("#gallery").append('<button id="orderCustom">Commander le bouquet</button>');
+        }
     } else 
     {
         $("body").append
@@ -38,10 +41,10 @@ function createImageGallery(array, i){
         '</div>'
         : 
         '<div class="article">' +
-            '<img id="fleur'+i+'" src="../'+array[i].location + '" alt="fleur'+i+'">'+ 
+            '<img class ="singleFlower" id="fleur'+i+'" src="../'+array[i].location + '" alt="fleur'+i+'">'+ 
             '<p class="item_name">'+array[i].name+'</p>'+
             '<p class="item_price">'+(array[i].price).toFixed(2)+'€'+'</p>'+
-            '<input type="number" id="'+array[i].name+'" min="0" max="100"></input>'+
+            '<input type="number" id="'+array[i].name+'" min="0" max="10" value="0"></input>'+
         '</div>'
         )
     );
@@ -74,10 +77,14 @@ function swapGallery(){
     } else {
         type = "bouquet";
     }
-    console.log("type: " + type);
     $.post("/home/swap", {type : type}, function(data)
     {
         $("#gallery").empty();
+        if(showCustom == true){
+            $("#priceRange").hide();
+        } else {
+            $("#priceRange").show();
+        }
         createGallery(data.new_articles);
     });
 }

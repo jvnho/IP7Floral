@@ -68,7 +68,7 @@ function decreaseBtnHandler(btn_clicked, article_id, article_quantity, index){
     $.post("/cart/update", {article_id : article_id, new_quantite : (article_quantity-1)}, function(data)
     {
         var price = data.new_panier[index].price;
-        var sousTotal = price * ((article_quantity)-1).toFixed(2);
+        var sousTotal = (price * ((article_quantity)-1)).toFixed(2);
 
         $(btn_clicked).siblings('p.article_quantity').html("Quantité: " + (article_quantity-1));
         $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal+'€');
