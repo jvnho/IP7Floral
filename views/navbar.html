@@ -5,15 +5,15 @@
 <script>
     if(code == 0)
     {
-        $('#nav').append('<button onclick="location.href=\'/home\'" class="headerBtn">Notre catalogue</button>');
-        $('#nav').append('<button onclick="location.href=\'/cart\'" class="headerBtn">Mon panier</button>');
-        $('#nav').append('<button onclick="location.href=\'/orders\'" class="headerBtn">Mes commandes</button>');
+        $('#nav').append('<button onclick="location.href=\'/home/\'" class="headerBtn">Notre catalogue</button>');
+        $('#nav').append('<button onclick="location.href=\'/cart/\'" class="headerBtn">Mon panier</button>');
+        $('#nav').append('<button onclick="location.href=\'/orders/\'" class="headerBtn">Mes commandes</button>');
     } else {
         $('#nav').append('<button onclick="location.href=\'/orders\'" class="headerBtn">Commandes clients</button>');
     }
     if(username != null)
     {
-        $('#nav').append('<button onclick="location.href=\'/logout\'" class="headerBtn" type="button">Se déconnecter ('+username+')</button>');
+        $('#nav').append('<button onclick="location.href=\'/logout/\'" class="headerBtn" type="button">Se déconnecter ('+username+')</button>');
     }
 </script>
 

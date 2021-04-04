@@ -77,7 +77,7 @@ server.get("/home", function(req,res)
             });
         } else //vendeur
         {
-            res.redirect("/orders");
+            res.redirect("/orders/");
         }
         
     } else {
