@@ -11,10 +11,10 @@ function initPanier(panier){
     valeurTotalPanier = 0.0;
     if(panier.length == 0) 
     { 
-        $("#mainContainer").append(
-            '<div class="msgContainer">'+
+        $("body").append(
+            '<div id="msgContainer">'+
                 '<h1 class="emptyCart">Votre panier est vide.</h1>'+
-                '<h2 class="emptyCart">Ajoutez des articles depuis la rubrique Notre Catalogue</h2>'+
+                '<h2 class="emptyCart">Ajoutez des articles depuis la rubrique <span id="ourStore">Notre Catalogue</span></h2>'+
             '</div>'
         );
     } else {
