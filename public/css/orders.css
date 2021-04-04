@@ -79,23 +79,27 @@ hr{
 
 /* commande vide (client ou employé)*/
 
-#mainContainer .msgContainer{
-    position: relative;
-    margin: auto;
-    top: 50%;
-    transform: translateY(50%);
+#msgContainer{
+    position: absolute;
     width: 100%;
     text-align: center;
+    margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
-.emptyCommand h1{
+
+#msgContainer h1{
     color: #FFC0CB;
 }
 
-.emptyCommand h2{
-    color: #C71585;
+#msgContainer h2{
+    color: #FFC0CB;
+    font-weight: lighter;
 }
 
-.emptyCommand h2 span{
+#msgContainer h2 span{
+    color: #C71585;
     font-style: italic;
 }
 /**/

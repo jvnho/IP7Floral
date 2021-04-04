@@ -13,15 +13,19 @@ function initOrderSummary(){
     } else {
         if(code == 0)
         {
-            $("#mainContainer").append(
-                '<h1 class="emptyCommand">Votre n\'avez passé aucune commande sur notre site.</h1>'+
-                '<h2 class="emptyCommand">Visitez notre boutique via la rubrique <span id="ourStore">Notre catalogue</span></h2>'
+            $("body").append(
+                '<div id="msgContainer">'+
+                    '<h1 class="emptyCommand">Votre n\'avez passé aucune commande sur notre site.</h1>'+
+                    '<h2 class="emptyCommand">Visitez notre boutique via la rubrique <span id="ourStore">Notre catalogue</span></h2>'+
+                '</div>'
             );
         } else 
         {
-            $("#mainContainer").append(
-                '<h1 class="emptyCommand">Aucune commande client disponible...</h1>'+
-                '<h2 class="emptyCommand">(pas une raison pour se la couler)</h2>'
+            $("body").append(
+                '<div id="msgContainer">'+
+                    '<h1 class="emptyCommand">Aucune commande client disponible...</h1>'+
+                    '<h2 class="emptyCommand">(pas une raison pour se la couler)</h2>'+
+                '</div>'
             );
         }
     }
