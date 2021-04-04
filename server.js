@@ -254,6 +254,10 @@ server.post("/orders/update", function(req,res){
     });
 });
 
+server.get("/orders/*", function(req,res){
+    res.redirect("/orders/")
+});
+
 server.get("/logout", function(req, res)
 {
     req.session.destroy();

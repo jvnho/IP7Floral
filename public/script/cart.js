@@ -1,3 +1,5 @@
+//server-client synchronisé: page totalement dynamisé
+
 var valeurTotalPanier;
 
 $(document).ready(function()
@@ -68,19 +70,19 @@ function decreaseBtnHandler(btn_clicked, article_id, article_quantity, index){
         var price = data.new_panier[index].price;
         var sousTotal = price * ((article_quantity)-1);
         $(btn_clicked).siblings('p.article_quantity').html("Quantité: " + (article_quantity-1));
-        $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal);
+        $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal+'€');
         if(parseFloat(valeurTotalPanier) >= 100 ){
-            valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(5);
+            valeurTotalPanier =  (parseFloat(valeurTotalPanier) - price).toPrecision(5);
         } else {
-            valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(4);
+            valeurTotalPanier =  (parseFloat(valeurTotalPanier) - price).toPrecision(4);
         }
         $("#totalText").html("Total: " + valeurTotalPanier+ "€");
         //respect de l'invariant
-        $(btn_clicked).attr('onlick','decreaseBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity-1)+','+index);
+        $(btn_clicked).attr('onclick','decreaseBtnHandler(this,'+article_id+','+(article_quantity-1)+','+index+')');
+        $(btn_clicked).siblings(".articleIncBtn").attr('onclick','increaseBtnHandler(this,'+article_id+','+(article_quantity-1)+','+index+')');
         if(article_quantity-1 <= 1){
             $(btn_clicked).prop('disabled', true);
         }
-        console.log($(btn_clicked).attr('onlick'));
     });
 }
 
@@ -90,15 +92,16 @@ function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
         var price = data.new_panier[index].price;
         var sousTotal = price * ((article_quantity)+1);
         $(btn_clicked).siblings('p.article_quantity').html("Quantité: " + (article_quantity+1));
-        $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal);
+        $(btn_clicked).siblings('p.article_sousTotal').html("Sous-Total: " + sousTotal+'€');
         if(parseFloat(valeurTotalPanier) >= 100 ){
             valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(5);
         } else {
             valeurTotalPanier =  (parseFloat(valeurTotalPanier) + price).toPrecision(4);
         }
         $("#totalText").html("Total: " + valeurTotalPanier+ "€");
-        $(btn_clicked).attr('onlick','increaseBtnHandler('+$(btn_clicked) + ','+article_id+','+(article_quantity+1)+','+index);
-        $(btn_clicked).prop('disabled', false);
+        $(btn_clicked).attr('onclick','increaseBtnHandler(this' + ', '+article_id+','+(article_quantity+1)+','+index+')');
+        $(btn_clicked).siblings(".articleDecBtn").attr('onclick','decreaseBtnHandler(this,'+article_id+','+(article_quantity+1)+','+index+')');
+        $(btn_clicked).siblings(".articleDecBtn").prop('disabled', false);
     });
 }
 
