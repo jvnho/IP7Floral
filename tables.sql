@@ -41,7 +41,7 @@ CREATE TABLE commande(
     commande_id INT AUTO_INCREMENT,
     user_id INT NOT NULL,
     total real DEFAULT 0, 
-    date_command TIMESTAMP NOT NULL,
+    date_command DATE NOT NULL,
     status VARCHAR(256) NOT NULL DEFAULT "En cours de traitement",
     FOREIGN KEY (user_id) REFERENCES utilisateur(user_id) ON DELETE CASCADE,
     PRIMARY KEY(commande_id)
@@ -59,6 +59,7 @@ CREATE TABLE article_commande(
 
 INSERT INTO utilisateur (username, password, code) VALUES ('nicolas', 'nicolas', 1);
 INSERT INTO utilisateur (username, password, code) VALUES ('client', 'client', 0);
+INSERT INTO utilisateur (username, password, code) VALUES ('client2', 'client2', 0);
 
 INSERT INTO article (name, location, type, price) VALUES('Prisha', 'img/bouquet0.jpg', 'bouquet', 22.90);
 INSERT INTO article (name, location, type, price) VALUES('Indira', 'img/bouquet1.jpg', 'bouquet', 19.95);
