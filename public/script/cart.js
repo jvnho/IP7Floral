@@ -65,7 +65,7 @@ function initButtons(article_container, article_quantity){
 
 //invariant: on peut diminuer la quantité ssi la quantité est >= à 2
 function decreaseBtnHandler(btn_clicked, article_id, article_quantity, index){
-    $.post("cart/update", {article_id : article_id, new_quantite : (article_quantity-1)}, function(data)
+    $.post("/cart/update", {article_id : article_id, new_quantite : (article_quantity-1)}, function(data)
     {
         var price = data.new_panier[index].price;
         var sousTotal = price * ((article_quantity)-1).toFixed(2);
@@ -87,7 +87,7 @@ function decreaseBtnHandler(btn_clicked, article_id, article_quantity, index){
 }
 
 function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
-    $.post("cart/update", {article_id : article_id, new_quantite : (article_quantity+1)}, function(data)
+    $.post("/cart/update", {article_id : article_id, new_quantite : (article_quantity+1)}, function(data)
     {
         var price = data.new_panier[index].price;
         var sousTotal = (price * ((article_quantity)+1)).toFixed(2);
@@ -106,7 +106,7 @@ function increaseBtnHandler(btn_clicked, article_id, article_quantity, index){
 }
 
 function deleteBtnHandler(btn_clicked, article_id){
-    $.post("cart/remove", {article_id : article_id}, function(data)
+    $.post("/cart/remove", {article_id : article_id}, function(data)
     {
         $("#notification").children("p").html("Article supprimé du panier");
         $("#notification").css('background-color', 'red');
