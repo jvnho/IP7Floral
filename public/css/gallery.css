@@ -1,3 +1,45 @@
+h1#customMessage{
+    font-weight: lighter;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFB6C1;
+}
+
+h1#customMessage:hover{
+    color: #C71585;
+}
+
+ul#tabs{
+    list-style: none;   
+    text-align: center;
+}
+
+ul#tabs li{
+    display:inline-block;
+    margin: 30px;
+}
+
+ul#tabs li button{
+    padding: 40px;
+    border: none;
+    background-color: #f1f1f1;
+    font-weight: bolder;
+    font-size: 15px;
+    transition: 0.5s;
+}
+
+ul#tabs li button:hover{
+    cursor: pointer;
+    color: white;
+    background-color: #FFB6C1;
+}
+
+ul#tabs li button:disabled:hover{
+    cursor:not-allowed;
+    background-color: inherit;
+    color: black;
+}
+
 /* aide externe pour le display grid: https://codepen.io/jfrancisayres/pen/gjMWGb */
 #gallery{
     display: grid;
@@ -72,6 +114,11 @@
     background-color: #FFC0CB;
 }
 
+#gallery input[type=number]{
+    width: 95%;
+    padding: 10px;
+}
+
 #priceRange{
     text-align: center;
 }
@@ -114,4 +161,21 @@ input[type=text]:focus {
 h1.emptyStore{
     text-align: center;
     color: #FFC0CB;
+}
+
+#orderCustom{
+    position:relative;
+    padding: 20px;
+    margin:10px;
+    width: 50%;
+    left: 25%;
+    font-size: 15px;
+    background-color: #f1f1f1;
+    transition: 0.5s;
+}
+
+#orderCustom:hover{
+    cursor: pointer;
+    color: white;
+    background-color: #FFC0CB;
 }

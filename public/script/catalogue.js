@@ -10,6 +10,8 @@ $(document).ready(function()
     priceInputHandler();
     searchPriceBtn();
     $("#collection").prop('disabled', true);
+    $("#customMessage").hide();
+    $("#orderCustom").hide();
 });
 
 function createGallery(array){
@@ -18,9 +20,6 @@ function createGallery(array){
         var i;
         for(i = 0; i < array.length; i++){
             createImageGallery(array, i);
-        }
-        if(showCustom == true){
-            $("#gallery").append('<button id="orderCustom">Commander le bouquet</button>');
         }
     } else 
     {
@@ -81,8 +80,12 @@ function swapGallery(){
     {
         $("#gallery").empty();
         if(showCustom == true){
+            $("#customMessage").show();
+            $("#orderCustom").show();
             $("#priceRange").hide();
         } else {
+            $("#customMessage").hide();
+            $("#orderCustom").hide();
             $("#priceRange").show();
         }
         createGallery(data.new_articles);
