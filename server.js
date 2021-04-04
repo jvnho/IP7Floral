@@ -181,7 +181,7 @@ server.post("/cart/update", function(req,res)
 server.post("/cart/order", function(req,res)
 {
     var panier = JSON.parse(req.body.panier);
-    var query = "INSERT INTO commande(user_id, total, date_command) VALUES("+ req.session.user_id+","+ req.body.total + ", CURRENT_TIME())";
+    var query = "INSERT INTO commande(user_id, total, date_command) VALUES("+ req.session.user_id+","+ req.body.total + ", CURDATE())";
     //créer un nouveau tuple dans la table commande
     pool.query(query, function(err, rows, fields)
     {

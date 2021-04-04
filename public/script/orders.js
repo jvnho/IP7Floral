@@ -41,7 +41,7 @@ function createOrderDiv(i){
             '<div class="infoCommande">'+
                 '<p>Référence commande: '+ref_command+'</p>'+
                 (code == 1 ? '<p>ID Client: ' + commandes[i].user_id+'</p>':'')+
-                '<p>Date de commande: ' + Date(Date.parse(commandes[i].date))+ '</p>'+
+                '<p>Date de commande: ' + new Date(commandes[i].date_command).toDateString() + '</p>'+
                 '<p>Statut : '+status_command+'</p>'+
             '</div>'+
             (code == 0 ? '': 
