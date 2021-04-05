@@ -48,10 +48,10 @@ function createOrderDiv(i){
             '<div class="changeComStatus">'+
                 '<p class="commande_status">Mettre à jour le statut de la commande: </p>'+
                 '<select name="orderStatus" id="statusList'+i+'">'+
-                    '<option value="abort" selected>Annulé</option>'+
+                    '<option value="abort" selected>Annulée</option>'+
                     '<option value="attente" selected>En cours de traitement</option>'+
                     '<option value="expedie">Expedié</option>'+
-                    '<option value="livre">Livré</option>'+
+                    '<option value="livre">Livrée</option>'+
                 '</select>'+
                 '<button class ="updateStatusBtnClass" onclick="updateClientOrder('+i+')" >Mettre à jour la commande</button>'+
             '</div>'

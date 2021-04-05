@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS ip7floral;
+DROP DATABASE IF EXISTS pw6sangsiri;
 
-CREATE DATABASE ip7floral;
+CREATE DATABASE pw6sangsiri;
 
-USE ip7floral;
+USE pw6sangsiri;
 
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS article;
@@ -42,7 +42,7 @@ CREATE TABLE commande(
     user_id INT NOT NULL,
     total real DEFAULT 0, 
     date_command DATE NOT NULL,
-    status VARCHAR(256) NOT NULL DEFAULT "En cours de traitement",
+    status VARCHAR(256) NOT NULL DEFAULT "Commande validée",
     FOREIGN KEY (user_id) REFERENCES utilisateur(user_id) ON DELETE CASCADE,
     PRIMARY KEY(commande_id)
 );
@@ -86,3 +86,7 @@ INSERT INTO article (name, location, type, price) VALUES('Mya', 'img/fleur3.jpg'
 INSERT INTO article (name, location, type, price) VALUES('Inaya', 'img/fleur4.jpg', 'fleur', 5.99);
 INSERT INTO article (name, location, type, price) VALUES('Ambre', 'img/fleur5.jpg', 'fleur', 5.99);
 INSERT INTO article (name, location, type, price) VALUES('Louise', 'img/fleur6.jpg', 'fleur', 6.00);
+
+INSERT INTO panier VALUES (2,13,1),(3,22,2),(3,23,4);
+INSERT INTO commande VALUES (1,2,39.94,'2021-04-05','Livrée'),(2,3,55.94,'2021-04-05','Annulée'),(3,3,39.98,'2021-04-05','Commande validée');
+INSERT INTO article_commande VALUES (1,2,1),(1,3,1),(2,3,1),(2,22,3),(2,23,2),(2,24,1),(3,3,1),(3,17,1);
