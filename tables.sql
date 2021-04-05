@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS article_commande;
 CREATE TABLE utilisateur(
     user_id INT AUTO_INCREMENT NOT NULL,
     username VARCHAR(15) NOT NULL,
-    password VARCHAR(25) NOT NULL,
+    password VARCHAR(64) NOT NULL,
     code INT(1) DEFAULT 0,
     PRIMARY KEY(user_id),
     UNIQUE(username)
@@ -57,9 +57,10 @@ CREATE TABLE article_commande(
 );
 
 
-INSERT INTO utilisateur (username, password, code) VALUES ('nicolas', 'nicolas', 1);
-INSERT INTO utilisateur (username, password, code) VALUES ('client', 'client', 0);
-INSERT INTO utilisateur (username, password, code) VALUES ('client2', 'client2', 0);
+INSERT INTO utilisateur (username, password, code) VALUES ('nicolas', md5('nicolas'), 1);
+INSERT INTO utilisateur (username, password, code) VALUES ('vendeur', md5('vendeur'), 1);
+INSERT INTO utilisateur (username, password, code) VALUES ('client', md5('client'), 0);
+INSERT INTO utilisateur (username, password, code) VALUES ('client2', md5('client2'), 0);
 
 INSERT INTO article (name, location, type, price) VALUES('Prisha', 'img/bouquet0.jpg', 'bouquet', 22.90);
 INSERT INTO article (name, location, type, price) VALUES('Indira', 'img/bouquet1.jpg', 'bouquet', 19.95);

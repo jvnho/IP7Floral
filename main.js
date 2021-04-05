@@ -4,6 +4,7 @@ const session = require('express-session');
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require('mysql');
+const md5 = require('md5');
 const bodyParser = require('body-parser')
 
 const server = express();
@@ -39,7 +40,7 @@ server.get("/login", function(req,res)
 //traitement du formulaire de login
 server.post("/login", function(req,res)
 {
-    var login = (req.body.login).trim(), password = req.body.password;        
+    var login = (req.body.login).trim(), password = md5(req.body.password);        
     pool.query('SELECT * FROM utilisateur WHERE username = ? AND password = ?', [login, password], function(err, rows, fields) 
     {
         if (err) throw err;

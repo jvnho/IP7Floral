@@ -4,7 +4,19 @@
 (si vous n'arrivez pas à effectuer cette étape copier-coller le contenu de tables.sql dans l'interpréteur mysql devrait faire l'affaire)
 
 - Toujours dans un terminal, exécutez npm install afin d'installer les dépendances du programme
-(si pour une raison quelconque ceci ne fonctionne pas pour vous, il va falloir installer à la main les modules suivants : express, express-session, mysql, path, ejs, body-parser, en tapant npm install <module>)
+(si pour une raison quelconque ceci ne fonctionne pas pour vous, il va falloir installer à la main les modules suivants : express, express-session, mysql, md5, path, ejs, body-parser, en tapant npm install <module>)
 
 - Exécutez "node main.js", ouvrir un navigateur tapez "localhost:8080" et vous êtes prêt à utiliser le site.
 
+Pour se connecter en tant que client:
+- login: client, mot de passe: client
+- login: client2, mot de passe: client 2
+
+Pour se connecter en tant de vendeur/fleuriste:
+- login: nicolas, mot de passe: nicolas
+- login: vendeur, mot de passe: vendeur
+
+(utilisation du protocole MD5 bien qu'obsolète)
+
+Les clients ont déjà un panier remplit, rien n'empêche de le modifier (ajouter, augmenter/diminuer la quantiter, supprimer un article).
+Les vendeurs ont quelques commandes à préparer, les clients peuvent en créer en validant le contenu de leur panier.
