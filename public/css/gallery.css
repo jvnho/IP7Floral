@@ -179,3 +179,9 @@ h1.emptyStore{
     color: white;
     background-color: #FFC0CB;
 }
+
+#prixCustom{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
