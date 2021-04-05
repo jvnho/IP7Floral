@@ -20,8 +20,8 @@ server.use("/", express.static(__dirname + '/public/'));
 var pool = mysql.createPool(
 {
     host: 'localhost',
-    user: 'root',
-    password: 'Nicola$32',
+    user: '',
+    password: '',
     database: 'pw6sangsiri',
     connectionLimit : 10
 });
