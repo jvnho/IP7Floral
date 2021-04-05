@@ -253,13 +253,13 @@ server.get("/orders", function(req,res)
 {
     if(req.session.initialized && req.session.code == 0)//utilisateur connecté et client
     {
-        pool.query('SELECT * FROM commande WHERE user_id = ?', [req.session.user_id], function(err, rows, fields){
+        pool.query('SELECT * FROM commande WHERE user_id = ? ORDER BY date_command DESC', [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
             res.render('orders.ejs', {commandes : rows, username: req.session.username, code : req.session.code});
         });
     } else if(req.session.initialized && req.session.code == 1)//utilisateur connecté et vendeur
     {
-        pool.query("SELECT * FROM commande WHERE status <> 'Livrée' AND status <> 'Annulée'", [req.session.user_id], function(err, rows, fields){
+        pool.query("SELECT * FROM commande WHERE status <> 'Livrée' AND status <> 'Annulée' ORDER BY date_command DESC", [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
             res.render('orders.ejs', {commandes : rows, username: req.session.username, code : req.session.code});
         });

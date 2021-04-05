@@ -90,6 +90,6 @@ INSERT INTO article (name, location, type, price) VALUES('Louise', 'img/fleur6.j
 
 INSERT INTO panier VALUES (3,6,1),(3,17,1),(4,23,3),(4,24,3);
 
-INSERT INTO commande VALUES (1,3,35.94,'2021-04-05','En cours de traitement'),(2,4,50.98,'2021-04-05','Commande validée');
+INSERT INTO commande VALUES (1,3,35.94,'2021-04-05','En cours de traitement'),(2,4,50.98,'2021-04-04','Commande validée');
 
 INSERT INTO article_commande VALUES (1,20,3),(1,22,2),(1,23,1),(2,10,1),(2,12,1);
