@@ -88,6 +88,8 @@ INSERT INTO article (name, location, type, price) VALUES('Inaya', 'img/fleur4.jp
 INSERT INTO article (name, location, type, price) VALUES('Ambre', 'img/fleur5.jpg', 'fleur', 5.99);
 INSERT INTO article (name, location, type, price) VALUES('Louise', 'img/fleur6.jpg', 'fleur', 6.00);
 
-INSERT INTO panier VALUES (2,13,1),(3,22,2),(3,23,4);
-INSERT INTO commande VALUES (1,2,39.94,'2021-04-05','Livrée'),(2,3,55.94,'2021-04-05','Annulée'),(3,3,39.98,'2021-04-05','Commande validée');
-INSERT INTO article_commande VALUES (1,2,1),(1,3,1),(2,3,1),(2,22,3),(2,23,2),(2,24,1),(3,3,1),(3,17,1);
+INSERT INTO panier VALUES (3,6,1),(3,17,1),(4,23,3),(4,24,3);
+
+INSERT INTO commande VALUES (1,3,35.94,'2021-04-05','En cours de traitement'),(2,4,50.98,'2021-04-05','Commande validée');
+
+INSERT INTO article_commande VALUES (1,20,3),(1,22,2),(1,23,1),(2,10,1),(2,12,1);
