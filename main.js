@@ -53,7 +53,7 @@ server.post("/login", function(req,res)
             res.redirect("/home/");
         } else 
         {
-            res.render('login.ejs', {message : "Mot de passe ou utilisateur inexistant"});
+            res.render('login.ejs', {message : "Mot de passe ou utilisateur inexistant", loginEntered : login});
         }
     });
 });

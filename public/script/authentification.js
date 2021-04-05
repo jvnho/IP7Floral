@@ -1,6 +1,7 @@
 $(document).ready(function()
 {
     $("#notification").hide();
+    $("#login").attr('value', loginEntered);
     submitFormHandler();
 });
 
