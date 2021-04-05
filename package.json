@@ -1,0 +1,29 @@
+{
+  "name": "dm",
+  "version": "1.0.0",
+  "description": "- Dans votre éditeur de texte préféré, ouvrez main.js et modifiez à partir de la ligne 20, les informations concernant mysql, c'est-à-dire \"user\" et \"password\" (éventuellement host).",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/junho_/dm-pw6.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/junho_/dm-pw6/issues"
+  },
+  "homepage": "https://gitlab.com/junho_/dm-pw6#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "md5": "^2.3.0",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
+  }
+}
