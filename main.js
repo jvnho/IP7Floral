@@ -4,8 +4,7 @@ const session = require('express-session');
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require('mysql');
-
-//const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 const server = express();
 
@@ -22,7 +21,7 @@ var pool = mysql.createPool(
     host: 'localhost',
     user: 'root',
     password: 'Nicola$32',
-    database: 'ip7floral',
+    database: 'pw6sangsiri',
     connectionLimit : 10
 });
     
