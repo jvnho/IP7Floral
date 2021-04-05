@@ -259,7 +259,7 @@ server.get("/orders", function(req,res)
         });
     } else if(req.session.initialized && req.session.code == 1)//utilisateur connecté et vendeur
     {
-        pool.query("SELECT * FROM commande WHERE status <> 'Livrée' AND status <> 'Annulée' ORDER BY date_command DESC", [req.session.user_id], function(err, rows, fields){
+        pool.query("SELECT * FROM commande WHERE status <> 'Livrée' AND status <> 'Annulée' ORDER BY date_command", [req.session.user_id], function(err, rows, fields){
             if(err) throw err;
             res.render('orders.ejs', {commandes : rows, username: req.session.username, code : req.session.code});
         });
