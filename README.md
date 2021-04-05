@@ -1,4 +1,5 @@
 - Dans votre éditeur de texte préféré, ouvrez main.js et ajoutez à partir de la ligne 20, les informations concernant la machine où tourne mysql, c'est-à-dire "user" (l.23) et "password" (l.24 ).
+(pour "user" veillez privilégier root, j'ai eu quelques problèmes en voulu utilisé un autre utilisateur qui avait pourtant les mêmes droits que root)
 
 - Ouvrir un terminal dans le répertoire courant et exécuter "source tables.sql" ce qui devrait créer une nouvelle base de donnée ainsi que les tables et quelques données associés
 (si vous n'arrivez pas à effectuer cette étape copier-coller le contenu de tables.sql dans l'interpréteur mysql devrait faire l'affaire)
